@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Login = () => {
@@ -14,6 +14,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast()
+  const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,7 +41,7 @@ const Login = () => {
         description: `Welcome Back, ${data.user.userName}`,
       })
 
-      redirect('/content/landing')
+      router.push("/content/landing");
 
     } catch (error: any) {
       console.log("🚀 ~ handleLogin ~ error:", error)
@@ -67,6 +68,7 @@ const Login = () => {
                   Email
                 </label>
                 <Input
+                  autoComplete="current-password"
                   id="email"
                   type="email"
                   required
@@ -81,6 +83,7 @@ const Login = () => {
                 <Input
                   id="password"
                   type="password"
+                  autoComplete="current-password"
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

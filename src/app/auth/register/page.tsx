@@ -1,12 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
@@ -17,7 +12,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
-  const { toast } = useToast()
+  const { toast } = useToast();
   const [form, setForm] = useState({
     email: "",
     userName: "",
@@ -59,8 +54,8 @@ const Register = () => {
 
       toast({
         title: "Registered successfully!",
-        description: 'Welcome From The YoK',
-      })
+        description: "Welcome From The YoK",
+      });
       // Optional: redirect to login
     } catch (err) {
       console.error("Register error", err);
@@ -98,6 +93,7 @@ const Register = () => {
                   User Name
                 </label>
                 <Input
+                  autoComplete="current-password"
                   id="userName"
                   type="text"
                   value={form.userName}
@@ -140,7 +136,9 @@ const Register = () => {
                 <Calendar
                   mode="single"
                   selected={form.dob}
-                  onSelect={(date) => setForm({ ...form, dob: date || new Date() })}
+                  onSelect={(date) =>
+                    setForm({ ...form, dob: date || new Date() })
+                  }
                   className="rounded-md border shadow"
                 />
               </div>
