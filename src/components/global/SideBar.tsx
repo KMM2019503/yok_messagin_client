@@ -1,43 +1,88 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import { LogOut } from "lucide-react";
 import { MessageCircle } from "lucide-react";
 import { Handshake } from "lucide-react";
 import { Cog } from "lucide-react";
-import LinkButton from "../ui/link";
-import IconButton from "../ui/icon-button";
 import Image from "next/image";
+import SidebarLinkButton from "../ui/sidebar-link";
+import LinkButton from "../ui/link";
+import {
+  MdOutlineKeyboardDoubleArrowRight,
+  MdOutlineKeyboardDoubleArrowLeft,
+} from "react-icons/md";
 
 const SideBar = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <>
-      <div className="w-full h-auto lg:w-[2.5rem] lg:h-screen bg-[#a2d2ff] dark:bg-[#22223b] p-2 lg:p-3 flex lg:flex-col justify-between items-center text-center shadow-2xl">
-        <div className="relative size-[2.2rem] rounded-full overflow-hidden">
+      <div
+        className={`w-full h-auto lg:h-screen bg-primaryLight-100 dark:bg-[#22223b] py-[0.3rem] lg:py-[1rem] px-[0.2rem] flex lg:flex-col justify-between items-center text-center shadow-2xl transition-all duration-300 ease-in-out ${
+          isExpanded ? "lg:w-[8rem]" : "lg:w-[2.2rem]"
+        }`}
+      >
+        <div className="lg:hidden relative size-[2.2rem] rounded-full overflow-hidden">
           <Image
             src="/images/logo.png"
             alt="logo"
             fill
-            className="object-cover" // or "object-cover"
+            className="object-cover"
           />
         </div>
-
-        <ul className="text-sm text-left flex lg:block gap-2 lg:space-y-2">
-          <li>
+        {/* This is menu icon */}
+        <div className="hidden lg:block">
+          {!isExpanded ? (
             <LinkButton
-              type="icon"
-              icon={<MessageCircle className="size-4 " />}
+              icon={<MdOutlineKeyboardDoubleArrowRight className="size-3" />}
+              type="button"
+              className="px-1 rounded-3xl"
+              onClick={() => setIsExpanded(!isExpanded)}
+            />
+          ) : (
+            <LinkButton
+              icon={<MdOutlineKeyboardDoubleArrowLeft className="size-3" />}
+              type="button"
+              className="px-1 rounded-3xl"
+              onClick={() => setIsExpanded(!isExpanded)}
+            />
+          )}
+        </div>
+
+        <ul className="text-sm w-full text-left flex justify-center gap-x-5 lg:gap-0 lg:block gap-2 lg:space-y-2">
+          <li>
+            <SidebarLinkButton
+              className="rounded-full"
+              icon={<MessageCircle className="size-4" />}
+              label={isExpanded ? "Chats" : ""}
+              isExpanded={isExpanded}
             />
           </li>
           <li>
-            <LinkButton type="icon" icon={<Handshake className="size-4 " />} />
+            <SidebarLinkButton
+              icon={<Handshake className="size-4" />}
+              label={isExpanded ? "Friends" : ""}
+              isExpanded={isExpanded}
+            />
           </li>
           <li>
-            <LinkButton type="icon" icon={<Cog className="size-4 " />} />
+            <SidebarLinkButton
+              icon={<Cog className="size-4" />}
+              label={isExpanded ? "Settings" : ""}
+              isExpanded={isExpanded}
+            />
           </li>
-          {/* <li>Friends</li>
-        <li>Settings</li> */}
         </ul>
+
         <div>
-          <IconButton icon={<LogOut className="size-4 " />} />
+          <LinkButton
+            icon={<LogOut className="size-[0.6rem]" />}
+            type="button"
+            className="px-1 rounded-3xl"
+            onClick={() => {
+              console.log("Logout");
+            }}
+          />
         </div>
       </div>
     </>

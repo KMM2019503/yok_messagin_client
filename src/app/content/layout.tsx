@@ -1,3 +1,4 @@
+import ConversationsBar from "@/components/global/ConversationsBar";
 import SideBar from "@/components/global/SideBar";
 
 export default function RootLayout({
@@ -6,9 +7,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex flex-col lg:flex-row min-h-screen w-full bg-primaryLight-200 dark:bg-primaryDark-100">
+    <div className="flex flex-col lg:flex-row min-h-screen w-full bg-primaryLight-300 dark:bg-primaryDark-100">
       <SideBar />
-      {children}
+      <div className="lg:px-[0.8rem] lg:py-[0.5rem] flex w-full gap-2">
+        {/* Conversations Bar */}
+        <ConversationsBar />
+        {children}
+      </div>
     </div>
   );
 }

@@ -2,28 +2,39 @@ import React from "react";
 import Link from "next/link";
 
 interface LinkButtonProps {
-  type?: "icon" | "text" | "icon-text";
-  icon?: React.ReactNode;
-  text?: string;
+  type: "button" | "icon" | "link";
+  icon: React.ReactNode;
+  label?: string;
   className?: string;
   href?: string;
+  onClick?: () => void;
 }
 
 const LinkButton: React.FC<LinkButtonProps> = ({
+  type,
   icon,
-  text,
+  label,
   className,
   href,
-  type = "text",
+  onClick,
 }) => {
+  const baseClasses =
+    "flex items-center shadow-md gap-2 p-[0.3rem] rounded-md text-primaryLight-600 border border-primaryLight-600 hover:border-primaryLight-700 hover:text-primaryLight-800 dark:border-cyan-900 dark:text-cyan-900 dark:hover:border-cyan-800 dark:hover:text-cyan-700 transition-colors";
+
+  if (type === "link" || type === "icon") {
+    return (
+      <Link href={href || "#"} className={`${baseClasses} ${className}`}>
+        {icon}
+        {label && <span className="text-sm">{label}</span>}
+      </Link>
+    );
+  }
+
   return (
-    <Link
-      href={href || "#"}
-      className={`flex items-center justify-center p-2 rounded-md bg-zinc-200 dark:bg-cyan-800 hover:bg-gray-100 dark:hover:bg-cyan-900 transition-colors ${className}`}
-    >
-      {type === "icon" && icon}
-      {type === "text" && text}
-    </Link>
+    <button className={`${baseClasses} ${className}`} onClick={onClick}>
+      {icon}
+      {label && <span className="text-sm">{label}</span>}
+    </button>
   );
 };
 
