@@ -22,7 +22,8 @@ const config: Config = {
 			},
 			primaryDark: {
 				100: '#1d2d44',
-				200: '#0d1321'
+				200: '#0d1321',
+				300: '#001d3d'
 			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
