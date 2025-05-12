@@ -5,15 +5,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { useAuthStore } from "@/providers/auth-store-provider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 const Login = () => {
+  const { login } = useAuthStore((state) => state);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { toast } = useToast()
+  const { toast } = useToast();
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
@@ -31,24 +33,31 @@ const Login = () => {
       });
 
       const data = await res.json();
-
+      
       if (!res.ok) {
         throw new Error(data.message || "Something went wrong");
       }
+      
+      console.log("🚀 ~ handleLogin ~ data:", data)
+      login({
+        id: data.user.id,
+        userName: data.user.userName,
+        email: data.user.email,
+        userUniqueID: data.user.userUniqueID,
+      });
 
       toast({
         title: "Logged in successfully!",
         description: `Welcome Back, ${data.user.userName}`,
-      })
+      });
 
       router.push("/content/landing");
-
     } catch (error: any) {
-      console.log("🚀 ~ handleLogin ~ error:", error)
+      console.log("🚀 ~ handleLogin ~ error:", error);
       toast({
         title: "Login failed",
         description: error.message,
-      })
+      });
     } finally {
       setLoading(false);
     }

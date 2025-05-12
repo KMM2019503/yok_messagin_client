@@ -9,7 +9,7 @@ import IconButton from "../ui/icon-button";
 const SideBar = () => {
   return (
     <>
-      <div className="w-[2.5rem] h-screen bg-[#a2d2ff] dark:bg-[#22223b] p-4 flex flex-col justify-between items-center text-center shadow-2xl">
+      <div className="w-[2.5rem] h-screen bg-primaryLight-300 dark:bg-[#22223b] p-4 flex flex-col justify-between items-center text-center shadow-2xl">
         <h1 className="text-lg font-bold font-mono ">TY</h1>
         <ul className="space-y-2 text-sm text-left">
           <li>
