@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { LogOut } from "lucide-react";
+import { LogOut, Settings } from "lucide-react";
 import { MessageCircle } from "lucide-react";
 import { Handshake } from "lucide-react";
 import { Cog } from "lucide-react";
@@ -18,7 +18,7 @@ const SideBar = () => {
   return (
     <>
       <div
-        className={`w-full h-auto lg:h-screen bg-primaryLight-100 dark:bg-[#22223b] py-[0.3rem] lg:py-[1rem] px-[0.2rem] flex lg:flex-col justify-between items-center text-center shadow-2xl transition-all duration-300 ease-in-out ${
+        className={`w-full h-[calc(100vh - 1rem)] bg-primaryLight-100 dark:bg-primaryLight2-700 py-[0.3rem] lg:py-[1rem] px-[0.2rem] flex lg:flex-col justify-between items-center text-center shadow-2xl transition-all duration-300 ease-in-out ${
           isExpanded ? "lg:w-[8rem]" : "lg:w-[2.2rem]"
         }`}
       >
@@ -76,7 +76,7 @@ const SideBar = () => {
 
         <div>
           <LinkButton
-            icon={<LogOut className="size-[0.6rem]" />}
+            icon={<Settings className="size-[0.6rem]" />}
             type="button"
             className="px-1 rounded-3xl"
             onClick={() => {

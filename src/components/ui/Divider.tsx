@@ -11,12 +11,12 @@ const Divider: React.FC<DividerProps> = ({
   className = "",
   orientation = "horizontal",
   thickness = 1,
-  color = "border-primaryLight-600 dark:border-cyan-950",
+  color = "border-primaryLight-600 dark:border-primaryLight2-500",
 }) => {
   const baseStyles =
     orientation === "horizontal"
-      ? `w-full border-t-[1px]`
-      : `h-full border-l-[1px]`;
+      ? `w-full border-t-[0.5px]`
+      : `h-full border-l-[0.5px]`;
 
   return (
     <div

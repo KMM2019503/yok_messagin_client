@@ -19,7 +19,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   onClick,
 }) => {
   const baseClasses =
-    "flex items-center shadow-md gap-2 p-[0.3rem] rounded-md text-primaryLight-600 border border-primaryLight-600 hover:border-primaryLight-700 hover:text-primaryLight-800 dark:border-cyan-900 dark:text-cyan-900 dark:hover:border-cyan-800 dark:hover:text-cyan-700 transition-colors";
+    "flex items-center shadow-md gap-2 p-[0.3rem] rounded-md primary-text-style primary-border-style transition-colors";
 
   if (type === "link" || type === "icon") {
     return (

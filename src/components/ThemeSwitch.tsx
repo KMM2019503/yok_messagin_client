@@ -2,6 +2,7 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import LinkButton from "./ui/link";
 const ThemeSwitcher = () => {
   const [mount, setMount] = useState(false);
   const { systemTheme, theme, setTheme } = useTheme();
@@ -15,17 +16,18 @@ const ThemeSwitcher = () => {
   console.log(currentTheme);
   return mount ? (
     <div className="max-lg:bottom-2.5 lg:top-1/3">
-      <button
-        onClick={handleThemeChange}
+      <LinkButton
+        icon={
+          currentTheme === "light" ? (
+            <Sun className="size-[1rem]" />
+          ) : (
+            <Moon className="size-[1rem]" />
+          )
+        }
         type="button"
-        className="flex py-1 px-[0.15rem] h-full items-center justify-center rounded-md border border-neutral-400 dark:border-purple-500 text-gray-800 focus:outline-none focus:ring-0 focus:ring-gray-200 dark:text-white"
-      >
-        {currentTheme === "light" ? (
-          <Sun className="size-4 text-neutral-600" />
-        ) : (
-          <Moon className="size-4 text-purple-600" />
-        )}
-      </button>
+        className="px-1 rounded-3xl"
+        onClick={handleThemeChange}
+      />
     </div>
   ) : null;
 };

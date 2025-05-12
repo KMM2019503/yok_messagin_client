@@ -19,7 +19,7 @@ const SidebarLinkButton: React.FC<SidebarLinkButton> = ({
   return (
     <Link
       href={href || "#"}
-      className={`py-2 px-1 rounded-md text-primaryLight-600 border border-primaryLight-600 hover:border-primaryLight-700 hover:text-primaryLight-800 dark:border-cyan-900 dark:text-cyan-900 dark:hover:border-cyan-800 dark:hover:text-cyan-700 transition-colors  ${className}
+      className={`py-2 px-1 rounded-md primary-text-style primary-border-style transition-colors  ${className}
       ${
         isExpanded
           ? "grid grid-cols-2 justify-start items-center px-[1rem]"

@@ -25,6 +25,16 @@ const config: Config = {
 				200: '#0d1321',
 				300: '#001d3d'
 			},
+			primaryLight2: {
+				100: '#e0aaff',
+				200: '#c77dff',
+				300: '#9d4edd',
+				400: '#7b2cbf',
+				500: '#5a189a',
+				600: '#6a4c93',
+				700: '#231942',
+				800: '#240046',
+			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

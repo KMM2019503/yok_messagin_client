@@ -76,3 +76,11 @@
     @apply bg-background text-foreground;
   }
 }
+
+.primary-text-style {
+  @apply text-primaryLight-600 dark:text-primaryLight2-500 hover:text-primaryLight-800 hover:dark:text-primaryLight2-600;
+}
+
+.primary-border-style {
+  @apply border border-primaryLight-600 hover:border-primaryLight-700 dark:border-primaryLight2-500
+}

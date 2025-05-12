@@ -4,7 +4,7 @@ import React from "react";
 
 const Landing = () => {
   return (
-    <div className="w-full h-screen relative">
+    <div className="w-full h-[calc(100vh - 1rem)] relative">
       <PortableNavBar />
     </div>
   );
