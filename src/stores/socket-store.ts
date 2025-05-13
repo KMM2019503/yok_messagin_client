@@ -1,11 +1,12 @@
 // stores/socket-store.ts
 import { create } from 'zustand';
 import { io, Socket } from 'socket.io-client';
+import { AuthStore } from './auth-store';
 
 type SocketState = {
   socket: Socket | null;
   isConnected: boolean;
-  connect: () => void;
+  connect: (authStore: AuthStore) => void;
   disconnect: () => void;
 };
 
@@ -16,10 +17,8 @@ export const useSocketStore = create<SocketState>((set) => {
     socket: null,
     isConnected: false,
 
-    connect: async () => {
-      // Prevent duplicate connections
+    connect: (authStore) => {
       if (socket?.connected) return;
-      console.log('Connecting to socket server...');
 
       socket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL, {
         withCredentials: true,
@@ -30,15 +29,28 @@ export const useSocketStore = create<SocketState>((set) => {
       });
 
       socket.on('connect', () => {
+        console.log('Socket connected');
         set({ isConnected: true, socket });
-        console.log("🚀 ~ socket.on ~ socket:", socket)
+        
+        socket?.emit('pullUserData');
       });
 
       socket.on('disconnect', () => {
+        console.log('Socket disconnected');
         set({ isConnected: false });
       });
 
-      // Connect manually after setting up listeners
+      socket.on('userData', (userData) => {
+        if (userData) {
+          authStore.login({
+            id: userData.id,
+            userName: userData.userName,
+            email: userData.email,
+            userUniqueID: userData.userUniqueID
+          });
+        }
+      });
+
       socket.connect();
       set({ socket });
     },
@@ -49,6 +61,6 @@ export const useSocketStore = create<SocketState>((set) => {
         socket = null;
         set({ socket: null, isConnected: false });
       }
-    },
+    }
   };
 });

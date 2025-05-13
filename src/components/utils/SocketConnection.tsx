@@ -1,21 +1,24 @@
-import { useAuthStore } from '@/providers/auth-store-provider';
+// components/SocketConnection.tsx
+'use client'
+
+import { useEffect } from 'react';
 import { useSocketStore } from '@/stores/socket-store';
-import React, { useEffect } from 'react'
+import { useAuthStore } from '@/providers/auth-store-provider';
+
 
 const SocketConnection = () => {
-    const { connect, disconnect, isConnected } = useSocketStore();
-    const { user } = useAuthStore((state) => state);
+  const { connect, disconnect } = useSocketStore();
+  const authStore = useAuthStore((state) => state);
 
-    useEffect(() => {
-      if (!user) return;
-      connect();
-  
-      return () => {
-        disconnect();
-      };
-    }, [user]);
+  useEffect(() => {
+    connect(authStore);
 
-    return null;
-}
+    return () => {
+      disconnect();
+    };
+  }, []);
 
-export default SocketConnection
+  return null;
+};
+
+export default SocketConnection;
