@@ -6,6 +6,7 @@ import { RiGlobalFill } from "react-icons/ri";
 import Divider from "../ui/Divider";
 
 const ConversationsBar = () => {
+  
   return (
     <div className="w-[14.5rem] hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700">
       <div className="flex items-center justify-between py-[0.5rem] px-[0.8rem]">
