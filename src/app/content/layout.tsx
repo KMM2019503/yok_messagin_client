@@ -16,7 +16,6 @@ export default function RootLayout({
         <div className="lg:px-[0.45rem] lg:py-[0.5rem] flex w-full gap-2">
           <SocketConnection />
           <ConnectionStatus />
-          <ConversationsBar />
           {children}
         </div>
       </div>

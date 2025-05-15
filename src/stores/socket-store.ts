@@ -6,6 +6,7 @@ import { AuthStore } from './auth-store';
 type SocketState = {
   socket: Socket | null;
   isConnected: boolean;
+  onlineUser: string[];
   connect: (authStore: AuthStore) => void;
   disconnect: () => void;
 };
@@ -16,6 +17,7 @@ export const useSocketStore = create<SocketState>((set) => {
   return {
     socket: null,
     isConnected: false,
+    onlineUser: [],
 
     connect: (authStore) => {
       if (socket?.connected) return;
@@ -50,6 +52,13 @@ export const useSocketStore = create<SocketState>((set) => {
           });
         }
       });
+
+      socket.on('pullOnlineUsers', (data) => {
+        console.log("🚀 ~ socket.on ~ data:", data)
+        if(data) {
+          set({onlineUser: structuredClone(data)})
+        }
+      })
 
       socket.connect();
       set({ socket });

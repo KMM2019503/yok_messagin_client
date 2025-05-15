@@ -30,7 +30,7 @@ const SideBar = () => {
             className="object-cover"
           />
         </div>
-        {/* This is menu icon */}
+        {/* menu icon */}
         <div className="hidden lg:block">
           {!isExpanded ? (
             <LinkButton
@@ -53,6 +53,7 @@ const SideBar = () => {
           <li>
             <SidebarLinkButton
               className="rounded-full"
+              href="/content/chats"
               icon={<MessageCircle className="size-4" />}
               label={isExpanded ? "Chats" : ""}
               isExpanded={isExpanded}
@@ -60,6 +61,7 @@ const SideBar = () => {
           </li>
           <li>
             <SidebarLinkButton
+              href="/content/friends"
               icon={<Handshake className="size-4" />}
               label={isExpanded ? "Friends" : ""}
               isExpanded={isExpanded}
