@@ -10,13 +10,15 @@ import { useFriendStore } from "@/stores/friends";
 import { useSocketStore } from "@/stores/socket-store";
 import { TiUserAdd, TiUser } from "react-icons/ti";
 import { UserType } from "@/type/user.type";
+import { useToast } from "@/hooks/use-toast";
 
 const NewFriendCard = ({ user }: { user: UserType }) => {
-  const { myFriends, setMyFriends, checkIsFriends } = useFriendStore();
+  const { checkIsFriends, addOutGoingRequest } = useFriendStore();
   const [isSend, setIsSend] = useState(false);
   const isAlreadyFriend = checkIsFriends(user.id);
   const { onlineUser } = useSocketStore();
   const [isOnline, setIsOnline] = React.useState(false);
+  const { toast } = useToast();
   const checkOnlineUser = () => {
     setIsOnline(onlineUser.includes(user.id));
   };
@@ -39,7 +41,14 @@ const NewFriendCard = ({ user }: { user: UserType }) => {
       }
 
       const data = await res.json();
-      console.log("🚀 ~ handleSendFriendRequest ~ data:", data);
+      if(data.message === 'Friend request sent successfully') {
+
+        addOutGoingRequest(data.friendRequest);
+        toast({
+          title: "Successfully sent friend request"
+        });
+      }
+      console.log("🚀 ~ handleSendFriendRequest ~ data:", data)
 
       setIsSend(true);
     } catch (error) {

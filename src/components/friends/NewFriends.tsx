@@ -4,6 +4,8 @@ import Divider from "../ui/Divider";
 import { Loader2, Search } from "lucide-react";
 import NewFriendCard from "./NewFriendCard";
 import { UserType } from "@/type/user.type";
+import { motion, AnimatePresence } from "framer-motion";
+import { container, item } from "./animation";
 
 const NewFriends = () => {
   const [loading, setLoading] = useState(false);
@@ -74,27 +76,48 @@ const NewFriends = () => {
         You can search and add friends
       </span>
 
-      {loading ? (
-        <div className="flex justify-center items-center py-4">
-          <Loader2 className="h-6 w-6 animate-spin text-primaryLight-500 dark:text-primaryDark-400" />
-        </div>
-      ) : error ? (
-        <div className="text-red-500 text-center py-4 text-sm">
-          {error}
-          <button
-            onClick={fetchFriends}
-            className="text-primaryLight-500 dark:text-primaryDark-400 underline ml-1"
-          >
-            Retry
-          </button>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-y-2 overflow-y-auto max-h-[calc(100vh-10rem)]">
-          {users.map((user) => (
-            <NewFriendCard key={user.id} user={user} />
-          ))}
-        </div>
-      )}
+      <div className="overflow-y-visible">
+        {loading ? (
+          <div className="flex justify-center items-center py-4">
+            <Loader2 className="h-6 w-6 animate-spin text-primaryLight-500 dark:text-primaryDark-400" />
+          </div>
+        ) : error ? (
+          <div className="text-red-500 text-center py-4 text-sm">
+            {error}
+            <button
+              onClick={fetchFriends}
+              className="text-primaryLight-500 dark:text-primaryDark-400 underline ml-1"
+            >
+              Retry
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-y-2">
+            <motion.div
+              variants={container}
+              initial="hidden"
+              animate="show"
+              className="space-y-2 pr-1 custom-scrollbar"
+            >
+              <AnimatePresence mode="popLayout">
+                {users.map((user) => (
+                  <motion.div
+                    key={user.id}
+                    variants={item}
+                    layout
+                    initial="hidden"
+                    animate="show"
+                    exit="exit"
+                    transition={{ type: "spring" }}
+                  >
+                    <NewFriendCard user={user} />
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

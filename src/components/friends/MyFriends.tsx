@@ -1,11 +1,11 @@
 import React from "react";
-import { UserType } from "./MyFriendsList";
 
 import { formatDistanceToNow } from "date-fns";
 import { Avatar } from "../ui/Avatar";
 import { AvatarImage } from "../ui/AvatarImage";
 import { useSocketStore } from "@/stores/socket-store";
 import { AvatarFallback } from "../ui/AvatarFallback";
+import { UserType } from "@/type/user.type";
 
 const MyFriends = ({ user }: { user: UserType }) => {
   const { onlineUser } = useSocketStore();
@@ -26,7 +26,7 @@ const MyFriends = ({ user }: { user: UserType }) => {
   }, [onlineUser]);
 
   return (
-    <div className="flex items-center p-2 hover:bg-primaryLight-200 dark:hover:bg-primaryLight2-800 rounded-lg transition-colors cursor-pointer">
+    <div className="flex items-center p-2 dark:bg-black/10 bg-white/35 hover:bg-white/65 dark:hover:bg-black/20 backdrop-blur-xl rounded-lg transition-colors cursor-pointer">
       <Avatar className="h-10 w-10 mr-3">
         <AvatarImage
           src={user.profilePictureUrl ?? undefined}
