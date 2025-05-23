@@ -51,7 +51,7 @@ const Login = () => {
         description: `Welcome Back, ${data.user.userName}`,
       });
 
-      router.push("/content/landing");
+      router.push("/content/chats");
     } catch (error: any) {
       console.log("🚀 ~ handleLogin ~ error:", error);
       toast({

@@ -1,9 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Divider from "../ui/Divider";
-import { UserType } from "./MyFriendsList";
-import { Loader2 } from "lucide-react";
-import MyFriends from "./MyFriends";
+import { Loader2, Search } from "lucide-react";
+import NewFriendCard from "./NewFriendCard";
+import { UserType } from "@/type/user.type";
 
 const NewFriends = () => {
   const [loading, setLoading] = useState(false);
@@ -16,7 +16,7 @@ const NewFriends = () => {
     const delayDebounce = setTimeout(() => {
       if (searchQuery.length >= 2) {
         fetchFriends();
-      } else if(searchQuery.length <= 0 ) {
+      } else if (searchQuery.length <= 0) {
         setNewUsers([]);
       }
     }, 500);
@@ -54,19 +54,22 @@ const NewFriends = () => {
   };
 
   return (
-    <div className="w-[20.5rem] py-[0.35rem] px-[0.45rem] hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700">
+    <div className="w-[25.5rem] p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700">
       {/* Search Bar */}
-      <div className="flex items-center justify-between">
+
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primaryLight-500 dark:text-primaryDark-400" />
         <input
           type="text"
-          placeholder="Search New Friends"
+          placeholder="Search friends..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full bg-transparent border border-primaryLight-600 dark:border-primaryLight2-500 rounded-lg h-8 px-4 focus:outline-none focus:ring-2 focus:ring-primaryLight-500 dark:focus:ring-primaryDark-500 primary-text-style text-sm"
+          className="w-full pl-9 pr-4 py-2 bg-transparent border border-primaryLight-600 dark:border-primaryLight2-500 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primaryLight2-300 dark:focus:ring-primaryDark-500 primary-text-style placeholder-primaryLight-500 dark:placeholder-primaryDark-400"
         />
       </div>
 
       <Divider className="my-2" />
+
       <span className="primary-font-style mb-2 text-sm flex items-center justify-start cursor-default">
         You can search and add friends
       </span>
@@ -88,7 +91,7 @@ const NewFriends = () => {
       ) : (
         <div className="flex flex-col gap-y-2 overflow-y-auto max-h-[calc(100vh-10rem)]">
           {users.map((user) => (
-            <MyFriends key={user.id} user={user} />
+            <NewFriendCard key={user.id} user={user} />
           ))}
         </div>
       )}

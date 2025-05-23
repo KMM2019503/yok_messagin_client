@@ -1,17 +1,51 @@
-import React from "react";
-import { UserType } from "./MyFriendsList";
+import React, { useState } from "react";
+
 
 import { formatDistanceToNow } from "date-fns";
 import { Avatar } from "../ui/Avatar";
-import { AvatarImage } from "../ui/AvatarImage";
-import { useSocketStore } from "@/stores/socket-store";
+import LinkButton from "../ui/link";
 import { AvatarFallback } from "../ui/AvatarFallback";
+import { AvatarImage } from "../ui/AvatarImage";
+import { useFriendStore } from "@/stores/friends";
+import { useSocketStore } from "@/stores/socket-store";
+import { TiUserAdd, TiUser } from "react-icons/ti";
+import { UserType } from "@/type/user.type";
 
-const MyFriends = ({ user }: { user: UserType }) => {
+const NewFriendCard = ({ user }: { user: UserType }) => {
+  const { myFriends, setMyFriends, checkIsFriends } = useFriendStore();
+  const [isSend, setIsSend] = useState(false);
+  const isAlreadyFriend = checkIsFriends(user.id);
   const { onlineUser } = useSocketStore();
   const [isOnline, setIsOnline] = React.useState(false);
   const checkOnlineUser = () => {
     setIsOnline(onlineUser.includes(user.id));
+  };
+  const handleSendFriendRequest = async () => {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SOCKET_SERVER_URL}/v1/friends/send-friend-request`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ receiverId: user.id }),
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error(res.statusText || "Failed to fetch friends");
+      }
+
+      const data = await res.json();
+      console.log("🚀 ~ handleSendFriendRequest ~ data:", data);
+
+      setIsSend(true);
+    } catch (error) {
+      console.error("Error fetching friends:", error);
+    } finally {
+    }
   };
   const getInitials = (name: string) => {
     return name
@@ -55,8 +89,26 @@ const MyFriends = ({ user }: { user: UserType }) => {
           </p>
         )}
       </div>
+
+      <div>
+        {isAlreadyFriend ? (
+          <LinkButton
+            onClick={handleSendFriendRequest}
+            type="button"
+            icon={<TiUser className="size-5 primary-text-style" />}
+            disabled={true}
+          />
+        ) : (
+          <LinkButton
+            onClick={handleSendFriendRequest}
+            type="button"
+            icon={<TiUserAdd className="size-5 primary-text-style" />}
+            disabled={false}
+          />
+        )}
+      </div>
     </div>
   );
 };
 
-export default MyFriends;
+export default NewFriendCard;

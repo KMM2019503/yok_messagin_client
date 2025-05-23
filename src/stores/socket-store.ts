@@ -2,6 +2,7 @@
 import { create } from 'zustand';
 import { io, Socket } from 'socket.io-client';
 import { AuthStore } from './auth-store';
+import { toast } from '@/hooks/use-toast';
 
 type SocketState = {
   socket: Socket | null;
@@ -54,11 +55,21 @@ export const useSocketStore = create<SocketState>((set) => {
       });
 
       socket.on('pullOnlineUsers', (data) => {
-        console.log("🚀 ~ socket.on ~ data:", data)
         if(data) {
           set({onlineUser: structuredClone(data)})
         }
       })
+
+      socket.on(
+        'newFriendRequest', (data) => {
+          if (data) {
+            toast({
+              title: "New Friend Request!",
+              description: `${data.userName} was send friend request`,
+            });
+          }
+        }
+      )
 
       socket.connect();
       set({ socket });

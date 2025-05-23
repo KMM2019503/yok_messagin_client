@@ -10,8 +10,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Mars, Venus, VenusAndMars } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/router";
 
 const Register = () => {
+  const router = useRouter();
   const { toast } = useToast();
   const [form, setForm] = useState({
     email: "",
@@ -57,6 +59,7 @@ const Register = () => {
         description: "Welcome From The YoK",
       });
       // Optional: redirect to login
+      router.push("/content/chats");
     } catch (err) {
       console.error("Register error", err);
     }

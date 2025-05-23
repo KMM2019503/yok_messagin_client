@@ -7,6 +7,7 @@ interface LinkButtonProps {
   label?: string;
   className?: string;
   href?: string;
+  disabled?: boolean
   onClick?: () => void;
 }
 
@@ -17,9 +18,10 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   className,
   href,
   onClick,
+  disabled
 }) => {
   const baseClasses =
-    "flex items-center shadow-md gap-2 p-[0.3rem] rounded-md primary-text-style primary-border-style transition-colors";
+    "flex items-center shadow-md gap-2 p-[0.3rem] rounded-md primary-text-style primary-border-style transition-colors disabled:cursor-not-allowed disabled:opacity-70";
 
   if (type === "link" || type === "icon") {
     return (
@@ -31,7 +33,7 @@ const LinkButton: React.FC<LinkButtonProps> = ({
   }
 
   return (
-    <button className={`${baseClasses} ${className}`} onClick={onClick}>
+    <button className={`${baseClasses} ${className}`} onClick={onClick} disabled={disabled}>
       {icon}
       {label && <span className="text-sm">{label}</span>}
     </button>

@@ -85,6 +85,10 @@
   @apply text-primaryLight-800 dark:text-primaryLight2-400 font-mono;
 }
 
+.secondary-font-style {
+  @apply dark:text-primaryLight2-600 text-primaryLight-500;
+}
+
 .primary-border-style {
   @apply border border-primaryLight-600 hover:border-primaryLight-700 dark:border-primaryLight2-500 hover:dark:border-primaryLight2-400;
 }

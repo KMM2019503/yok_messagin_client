@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-const protectedRoutes = ['/content/landing']
+const protectedRoutes = ['/content/chats', '/content/friends']
  
 export function middleware(request: NextRequest) {
   const token = request.cookies.get('token')?.value
