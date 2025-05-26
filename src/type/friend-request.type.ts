@@ -9,3 +9,12 @@ export type outGoingRequestsType = {
   updatedAt: Date;
   receiver: UserType;
 }
+
+export type RequestType = {
+  id: string;
+  senderId: string;
+  receiverId: string;
+  status: string;
+  createdAt: Date;
+  sender: UserType;
+}

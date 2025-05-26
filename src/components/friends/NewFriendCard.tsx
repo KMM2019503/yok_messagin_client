@@ -48,7 +48,6 @@ const NewFriendCard = ({ user }: { user: UserType }) => {
           title: "Successfully sent friend request"
         });
       }
-      console.log("🚀 ~ handleSendFriendRequest ~ data:", data)
 
       setIsSend(true);
     } catch (error) {
@@ -100,7 +99,7 @@ const NewFriendCard = ({ user }: { user: UserType }) => {
       </div>
 
       <div>
-        {isAlreadyFriend ? (
+        {isAlreadyFriend || isSend ? (
           <LinkButton
             onClick={handleSendFriendRequest}
             type="button"

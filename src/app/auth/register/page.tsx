@@ -21,7 +21,7 @@ const Register = () => {
     gender: "M",
     dob: new Date(),
     password: "",
-    profilePictureUrl: "", // Placeholder for now
+    profilePictureUrl: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
