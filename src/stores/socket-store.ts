@@ -3,7 +3,7 @@ import { create } from "zustand";
 import { io, Socket } from "socket.io-client";
 import { AuthStore } from "./auth-store";
 import { toast } from "@/hooks/use-toast";
-import { useFriendStore } from "./friends";
+import { friendStore } from "./friends";
 
 type SocketState = {
   socket: Socket | null;
@@ -33,15 +33,9 @@ export const useSocketStore = create<SocketState>((set) => {
       });
 
       socket.on("connect", () => {
-        console.log("Socket connected");
         set({ isConnected: true, socket });
 
         socket?.emit("pullUserData");
-      });
-
-      socket.on("disconnect", () => {
-        console.log("Socket disconnected");
-        set({ isConnected: false });
       });
 
       socket.on("userData", (userData) => {
@@ -67,33 +61,34 @@ export const useSocketStore = create<SocketState>((set) => {
             title: "New Friend Request!",
             description: `${data.userName} was send friend request`,
           });
-
-          const friendStore = useFriendStore();
-          friendStore.addRequest(data.friendRequest)
+          friendStore.getState().addRequest(data.request);
         }
       });
 
       socket.on("friendRequestResponse", (data) => {
         if (data) {
-          console.log("🚀 ~ socket.on ~ data:", data);
-
-          const friendStore = useFriendStore();
-
-          // Update friend store based on status
-          // if (status === "accepted" && friend) {
-          //   friendStore.addFriend(friend);
-          //   friendStore.removeListItem(friend.id, "request");
-          // }
-
-          // if (status === "rejected" && friend?.id) {
-          //   friendStore.removeListItem(friend.id, "request");
-          // }
-
+          if (data.status === "accepted") {
+            friendStore.getState().addFriend(data.friendRequest.receiver);
+            friendStore
+              .getState()
+              .removeListItem(data.friendRequest.id, "outgoing");
+          } else if (data.status === "rejected") {
+            friendStore.getState().updateOutGoingRequests(data.friendRequest);
+          } else if (data.status === "cancelled") {
+            friendStore
+              .getState()
+              .removeListItem(data.friendRequest.id, "request");
+          }
           toast({
             title: "Friend Request Response",
             description: data.message,
           });
         }
+      });
+
+      socket.on("disconnect", () => {
+        console.log("Socket disconnected");
+        set({ isConnected: false });
       });
 
       socket.connect();

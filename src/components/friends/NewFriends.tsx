@@ -56,7 +56,7 @@ const NewFriends = () => {
   };
 
   return (
-    <div className="w-[25.5rem] p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700">
+    <div className="w-full p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700">
       {/* Search Bar */}
 
       <div className="relative">

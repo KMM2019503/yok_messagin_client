@@ -35,7 +35,7 @@ const RequestCard = ({ request }: { request: any }) => {
       const data = await res.json();
 
       if (data.requestId === request.id) {
-        addFriend(request.sender);
+        addFriend(data.sender);
         removeListItem(data.requestId, "request");
         toast({
           title: "Friend request accepted",
@@ -139,9 +139,7 @@ const RequestCard = ({ request }: { request: any }) => {
           disabled={isLoading}
           size="sm"
           className="text-xs text-white/80 dark:text-white/60 w-full my-2 bg-primaryLight-500 hover:bg-primaryLight-600 dark:bg-primaryLight2-400 dark:hover:bg-primaryLight2-500"
-          onClick={() => {
-            handleAcceptRequest();
-          }}
+          onClick={handleRejectRequest}
         >
           Reject
         </Button>
@@ -149,9 +147,7 @@ const RequestCard = ({ request }: { request: any }) => {
           disabled={isLoading}
           size="sm"
           className="text-xs text-white/80 dark:text-white/60 w-full my-2 bg-primaryLight-500 hover:bg-primaryLight-600 dark:bg-primaryLight2-400 dark:hover:bg-primaryLight2-500"
-          onClick={() => {
-            handleRejectRequest();
-          }}
+          onClick={handleAcceptRequest}
         >
           Accept
         </Button>

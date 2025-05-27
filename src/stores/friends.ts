@@ -17,6 +17,7 @@ type FriendStoreType = {
   outGoingRequests: outGoingRequestsType[] | [];
   addOutGoingRequest: (request: outGoingRequestsType) => void;
   setOutGoingRequests: (requests: outGoingRequestsType[]) => void;
+  updateOutGoingRequests: (requests: outGoingRequestsType) => void;
 
   // Util Functions
   checkIsFriends: (userId: string) => boolean;
@@ -24,7 +25,8 @@ type FriendStoreType = {
   removeListItem: (id: string, type: "request" | "outgoing" | "friend") => void;
 };
 
-export const useFriendStore = create<FriendStoreType>((set, get) => ({
+// First create the store instance
+const friendStore = create<FriendStoreType>((set, get) => ({
   // My Friends
   myFriends: [],
   setMyFriends: (friends: UserType[]) => set({ myFriends: friends }),
@@ -33,7 +35,7 @@ export const useFriendStore = create<FriendStoreType>((set, get) => ({
     set({ myFriends: [friend, ...myFriends] });
   },
 
-  //Friend Requests
+  // Friend Requests
   requestList: [],
   setRequestList: (requests: RequestType[]) => set({ requestList: requests }),
   addRequest: (request: RequestType) => {
@@ -49,6 +51,11 @@ export const useFriendStore = create<FriendStoreType>((set, get) => ({
     const { outGoingRequests } = get();
     set({ outGoingRequests: [request, ...outGoingRequests] });
   },
+  updateOutGoingRequests: (request: outGoingRequestsType) => {
+    const { outGoingRequests } = get();
+    let newList = outGoingRequests.filter((req) => req.id !== request.id);
+    set({ outGoingRequests: [request, ...newList] });
+  },
 
   // Util Functions
   checkIsFriends: (userId: string) => {
@@ -59,7 +66,7 @@ export const useFriendStore = create<FriendStoreType>((set, get) => ({
   removeListItem: (id: string, type: "request" | "outgoing" | "friend") => {
     if (type === "request") {
       set((state) => ({
-        requestList: state.requestList.filter((request) => request.id !== id)
+        requestList: state.requestList.filter((request) => request.id !== id),
       }));
     }
 
@@ -67,14 +74,20 @@ export const useFriendStore = create<FriendStoreType>((set, get) => ({
       set((state) => ({
         outGoingRequests: state.outGoingRequests.filter(
           (request) => request.id !== id
-        )
+        ),
       }));
     }
 
     if (type === "friend") {
       set((state) => ({
-        myFriends: state.myFriends.filter((friend) => friend.id !== id)
+        myFriends: state.myFriends.filter((friend) => friend.id !== id),
       }));
     }
-  }
+  },
 }));
+
+// Export the store instance for direct usage in non-component code
+export { friendStore };
+
+// Export the hook for usage in React components
+export const useFriendStore = friendStore;

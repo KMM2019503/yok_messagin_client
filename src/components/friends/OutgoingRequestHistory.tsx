@@ -9,7 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { container, item } from "./animation";
 
 const OutGoingRequestsHistory = () => {
-  const { outGoingRequests, setOutGoingRequests } = useFriendStore();
+  const { outGoingRequests, setOutGoingRequests, updateOutGoingRequests } = useFriendStore();
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
   const [searchQuery, setSearchQuery] = React.useState("");
@@ -49,10 +49,10 @@ const OutGoingRequestsHistory = () => {
 
   React.useEffect(() => {
     fetchOutGoingRequestHistory();
-  }, [fetchOutGoingRequestHistory]);
+  }, [fetchOutGoingRequestHistory, updateOutGoingRequests]);
 
   return (
-    <div className="w-[17.5rem] p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
+    <div className="w-full p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
       {/* Search Bar */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primaryLight-500 dark:text-primaryDark-400" />

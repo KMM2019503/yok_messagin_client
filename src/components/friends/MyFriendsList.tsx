@@ -33,7 +33,7 @@ const MyFriendsList = () => {
       }
 
       const data = await res.json();
-      setMyFriends(data.friends || []);
+      await setMyFriends(data.friends || []);
     } catch (error) {
       console.error("Error fetching friends:", error);
       setError(error instanceof Error ? error.message : "Something went wrong");
@@ -55,7 +55,7 @@ const MyFriendsList = () => {
   );
 
   return (
-    <div className="w-[20.5rem] p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
+    <div className="w-full p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
       {/* Search Bar */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primaryLight-500 dark:text-primaryDark-400" />
