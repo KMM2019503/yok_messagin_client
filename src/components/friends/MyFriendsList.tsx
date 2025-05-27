@@ -55,16 +55,16 @@ const MyFriendsList = () => {
   );
 
   return (
-    <div className="w-full p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
+    <div className="flex-1 p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
       {/* Search Bar */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primaryLight-500 dark:text-primaryDark-400" />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primaryLight-500 dark:text-primaryLight2-500" />
         <input
           type="text"
           placeholder="Search friends..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          className="w-full pl-9 pr-4 py-2 bg-transparent border border-primaryLight-600 dark:border-primaryLight2-500 rounded-lg text-sm focus:outline-none focus:ring-1 focus:ring-primaryLight2-300 dark:focus:ring-primaryDark-500 primary-text-style placeholder-primaryLight-500 dark:placeholder-primaryDark-400"
+          className="w-full pl-9 pr-4 py-2 text-sm primary-text-style bg-transparent border rounded-lg border-primaryLight-600 dark:border-primaryLight2-500 focus:outline-none focus:ring-1 focus:ring-primaryLight-700 dark:focus:ring-primaryLight2-700 placeholder-primaryLight-500 dark:placeholder-primaryLight2-500"
         />
       </div>
 

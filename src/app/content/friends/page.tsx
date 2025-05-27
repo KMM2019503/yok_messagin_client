@@ -8,7 +8,7 @@ import React from 'react'
 
 const Friends = () => {
   return (
-    <div className='w-[50%] grid grid-cols-2 items-center gap-2'>
+    <div className='w-[50%] grid grid-cols-2 grid-rows-2 items-center gap-2'>
       <MyFriendsList />
       <NewFriends />
       <FriendRequestLists />
