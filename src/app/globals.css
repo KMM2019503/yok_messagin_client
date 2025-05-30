@@ -92,3 +92,20 @@
 .primary-border-style {
   @apply border border-primaryLight-600 hover:border-primaryLight-700 dark:border-primaryLight2-500 hover:dark:border-primaryLight2-400;
 }
+
+.scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

@@ -51,7 +51,7 @@ const FriendRequestLists = () => {
   }, [fetchFriendRequestList]);
 
   return (
-    <div className="flex-1 p-3 hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
+    <div className="overflow-hidden flex flex-col flex-1 p-3 h-[calc(100vh-50vh-20px)] rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 shadow-sm">
       {/* Search Bar */}
       <div className="relative">
         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-primaryLight-500 dark:text-primaryLight2-500" />
@@ -70,7 +70,7 @@ const FriendRequestLists = () => {
         Friends Request List
       </span>
 
-      <div className="overflow-y-visible">
+      <div className="flex-1 overflow-y-auto scroll-container pr-2">
         {loading ? (
           <div className="flex flex-col items-center justify-center py-8">
             <Loader2 className="h-6 w-6 animate-spin text-primaryLight-500 dark:text-primaryDark-400 mb-2" />
@@ -113,7 +113,7 @@ const FriendRequestLists = () => {
             variants={container}
             initial="hidden"
             animate="show"
-            className="space-y-2 pr-1 custom-scrollbar"
+            className="space-y-2"
           >
             <AnimatePresence mode="popLayout">
               {filteredRequests.map((request) => (

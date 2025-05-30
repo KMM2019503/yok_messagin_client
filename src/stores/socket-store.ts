@@ -11,6 +11,7 @@ type SocketState = {
   onlineUser: string[];
   connect: (authStore: AuthStore) => void;
   disconnect: () => void;
+  updateLocation: (location: { latitude: number; longitude: number }) => void;
 };
 
 export const useSocketStore = create<SocketState>((set) => {
@@ -93,6 +94,13 @@ export const useSocketStore = create<SocketState>((set) => {
 
       socket.connect();
       set({ socket });
+    },
+
+    updateLocation: (location: { latitude: number; longitude: number }) => {
+      const currentSocket = useSocketStore.getState().socket;
+      if (currentSocket?.connected) {
+        currentSocket.emit("updateUserLocation", location);
+      }
     },
 
     disconnect: () => {

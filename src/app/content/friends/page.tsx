@@ -4,11 +4,11 @@ import MyFriendsList from '@/components/friends/MyFriendsList'
 import NewFriends from '@/components/friends/NewFriends'
 import OutGoingRequestsHistory from '@/components/friends/OutgoingRequestHistory'
 import PortableNavBar from '@/components/global/PortableNavBar'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Friends = () => {
   return (
-    <div className='w-[50%] grid grid-cols-2 grid-rows-2 items-center gap-2'>
+    <div className='w-[50%] grid grid-cols-2 grid-rows-2 items-center gap-1'>
       <MyFriendsList />
       <NewFriends />
       <FriendRequestLists />
