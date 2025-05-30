@@ -1,5 +1,6 @@
 'use client'
-import ConversationsBar from "@/components/global/ConversationsBar";
+
+import ConversationsBar from "@/components/chats/ConversationsBar";
 
 export default function RootLayout({
   children,
