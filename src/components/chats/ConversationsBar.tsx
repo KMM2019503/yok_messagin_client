@@ -8,27 +8,30 @@ import { useAuthStore } from "@/providers/auth-store-provider";
 
 const ConversationsBar = () => {
   const { user } = useAuthStore((state) => state);
-  
+
   return (
-    <div className="w-[14.5rem] hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700">
-      <div className="flex items-center justify-between py-[0.5rem] px-[0.8rem]">
-        <LinkButton icon={<RiGlobalFill className="size-4" />} type="link" />
-        <LinkButton icon={<MdOutlineGroup className="size-4" />} type="link" />
-        <LinkButton icon={<MdOutlineGroups className="size-4" />} type="link" />
-        <LinkButton icon={<GiGroupedDrops className="size-4" />} type="link" />
+    <div className="w-[20.5rem] hidden lg:block h-full rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700">
+      <div className="grid grid-cols-3 justify-center items-center py-[0.5rem] px-[0.8rem]">
+        <div className="flex items-center justify-center">
+          <LinkButton icon={<RiGlobalFill className="size-4" />} type="link" />
+        </div>
+        <div className="flex items-center justify-center">
+          <LinkButton
+            icon={<MdOutlineGroup className="size-4" />}
+            type="link"
+          />
+        </div>
+        <div className="flex items-center justify-center">
+          <LinkButton
+            icon={<MdOutlineGroups className="size-4" />}
+            type="link"
+          />
+        </div>
       </div>
       {/* Divider */}
       <Divider thickness={2} />
       <div className="mt-2 w-full flex flex-col items-center justify-center primary-font-style font-mono">
-        {
-          user ? (
-            <span>Conversation List</span>
-          ) : (
-            <span>
-              loading...
-            </span>
-          )
-        }
+        {user ? <span>Conversation List</span> : <span>loading...</span>}
       </div>
     </div>
   );

@@ -7,11 +7,12 @@ export type AuthState = {
     userName: string;
     email: string;
     userUniqueID: string;
+    profilePictureUrl?: string | null;
   } | null;
 };
 
 export type AuthAction = {
-  login: (user: { id: string; userName: string; email: string, userUniqueID: string }) => void;
+  login: (user: { id: string; userName: string; email: string, userUniqueID: string, profilePictureUrl: string | null }) => void;
   logout: () => void;
 };
 
@@ -41,6 +42,7 @@ export const createAuthStore = (initState: AuthState = defaultInitState) => {
           userName: user.userName,
           email: user.email,
           userUniqueID: user.userUniqueID,
+          profilePictureUrl: user.profilePictureUrl || null,
         },
       })),
     logout: () =>
