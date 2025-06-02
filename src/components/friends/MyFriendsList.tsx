@@ -18,7 +18,7 @@ const MyFriendsList = () => {
     setError(null);
     try {
       const res = await fetch(
-        "http://localhost:8888/v1/friends/get-all-friends",
+        `${process.env.NEXT_PUBLIC_BASE_URL}/friends/get-all-friends`,
         {
           method: "GET",
           credentials: "include",

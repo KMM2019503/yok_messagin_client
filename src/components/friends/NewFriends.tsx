@@ -142,7 +142,7 @@ const NewFriends = () => {
       );
 
       const res = await fetch(
-        `http://localhost:8888/v1/friends/get-users-nearby-location`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/friends/get-users-nearby-location`,
         {
           method: "POST",
           credentials: "include",

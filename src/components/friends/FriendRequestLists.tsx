@@ -22,7 +22,7 @@ const FriendRequestLists = () => {
     setError(null);
     try {
       const res = await fetch(
-        "http://localhost:8888/v1/friends/get-friends-requests/?type=received",
+        `${process.env.NEXT_PUBLIC_BASE_URL}/friends/get-friends-requests/?type=received`,
         {
           method: "GET",
           credentials: "include",

@@ -22,8 +22,16 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
 
+    if (!email || !password) {
+        toast({
+            title: "Validation Error",
+            description: "Please enter both email and password",
+        });
+        return;
+    }
+
     try {
-      const res = await fetch("http://localhost:8888/v1/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/login`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -37,8 +45,6 @@ const Login = () => {
       if (!res.ok) {
         throw new Error(data.message || "Something went wrong");
       }
-      
-      console.log("🚀 ~ handleLogin ~ data:", data)
       login({
         id: data.user.id,
         userName: data.user.userName,

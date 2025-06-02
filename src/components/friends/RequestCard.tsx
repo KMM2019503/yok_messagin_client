@@ -15,7 +15,7 @@ const RequestCard = ({ request }: { request: any }) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `http://localhost:8888/v1/friends/accept-friend-request`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/friends/accept-friend-request`,
         {
           method: "POST",
           credentials: "include",
@@ -60,7 +60,7 @@ const RequestCard = ({ request }: { request: any }) => {
     try {
       setIsLoading(true);
       const res = await fetch(
-        `http://localhost:8888/v1/friends/reject-friend-request`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/friends/reject-friend-request`,
         {
           method: "POST",
           credentials: "include",
