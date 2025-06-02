@@ -12,7 +12,13 @@ export type AuthState = {
 };
 
 export type AuthAction = {
-  login: (user: { id: string; userName: string; email: string, userUniqueID: string, profilePictureUrl: string | null }) => void;
+  login: (user: {
+    id: string;
+    userName: string;
+    email: string;
+    userUniqueID: string;
+    profilePictureUrl: string | null;
+  }) => void;
   logout: () => void;
 };
 

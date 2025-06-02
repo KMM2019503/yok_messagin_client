@@ -50,6 +50,7 @@ const Login = () => {
         userName: data.user.userName,
         email: data.user.email,
         userUniqueID: data.user.userUniqueID,
+        profilePictureUrl: data.user.profilePictureUrl
       });
 
       toast({
