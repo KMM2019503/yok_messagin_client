@@ -1,6 +1,7 @@
-'use client'
+"use client";
 
 import ConversationsBar from "@/components/chats/ConversationsBar";
+import PortableNavBar from "@/components/global/PortableNavBar";
 
 export default function RootLayout({
   children,
@@ -8,9 +9,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-      <>
-        <ConversationsBar />
-        { children }
-      </>
+    <>
+      <PortableNavBar />
+      <ConversationsBar />
+      {children}
+    </>
   );
 }

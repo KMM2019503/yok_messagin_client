@@ -9,10 +9,11 @@ import { AvatarImage } from "../ui/AvatarImage";
 import { useSocketStore } from "@/stores/socket-store";
 import { useToast } from "@/hooks/use-toast";
 import { error } from "console";
+import { useRouter } from "next/navigation";
 
 const PortableNavBar = () => {
   const { toast } = useToast();
-
+  const router = useRouter();
   const { user, isAuthenticated } = useAuthStore((state) => state);
   const { disconnect } = useSocketStore();
 
@@ -43,6 +44,7 @@ const PortableNavBar = () => {
         });
         // Handle successful logout (e.g., redirect, clear storage)
         console.log("Logout successful:", res.message);
+        router.push("/auth/login");
       }
     } catch (error) {
       toast({

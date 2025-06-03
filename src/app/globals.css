@@ -102,10 +102,28 @@
 }
 
 .scroll-container::-webkit-scrollbar-thumb {
-  background: #888;
+  background: #6a4c93;
   border-radius: 3px;
 }
 
 .scroll-container::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: #6a4c93;
+}
+
+/* Light Scroll Bar */
+.scroll-container-light::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scroll-container-light::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scroll-container-light::-webkit-scrollbar-thumb {
+  background: #0077b6;
+  border-radius: 3px;
+}
+
+.scroll-container-light::-webkit-scrollbar-thumb:hover {
+  background: #0077b6;
 }

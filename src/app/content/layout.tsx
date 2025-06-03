@@ -12,7 +12,7 @@ export default function RootLayout({
   return (
     <div className="flex flex-col lg:flex-row min-h-screen w-full bg-primaryLight-300 dark:bg-[#210F37] relative">
       <SideBar />
-      <div className="lg:px-[0.45rem] lg:py-[0.5rem] flex w-full gap-2">
+      <div className="lg:px-[0.5rem] lg:py-[0.5rem] flex w-full gap-2">
         <SocketConnection />
         {process.env.NEXT_PUBLIC_ENVIRONMENT === "development" && (
           <ConnectionStatus />
