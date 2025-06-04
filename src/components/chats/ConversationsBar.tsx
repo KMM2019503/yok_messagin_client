@@ -9,6 +9,7 @@ import { useAuthStore } from "@/providers/auth-store-provider"
 import { Loader2, Plus } from "lucide-react"
 import ConversationItem from "./ConversationItem"
 import { Conversation, ConversationsResponse, Member } from "@/type/conversation.type"
+import { useRouter } from "next/navigation"
 
 const ConversationsBar = () => {
   const { user } = useAuthStore((state) => state)
@@ -21,6 +22,8 @@ const ConversationsBar = () => {
 
   const loadingRef = useRef(false)
   const scrollContainerRef = useRef<HTMLDivElement>(null)
+
+  const router = useRouter();
 
   const handleScroll = useCallback(() => {
     const container = scrollContainerRef.current
@@ -128,6 +131,12 @@ const ConversationsBar = () => {
   }
 
   useEffect(() => {
+    if (conversations.length > 0) {
+      router.push(`/content/chats/${conversations[0].id}`)
+    }
+  }, [conversations])
+
+  useEffect(() => {
     if (user) {
       handleFetchConversations(undefined, true)
     }
@@ -162,7 +171,7 @@ const ConversationsBar = () => {
             icon={getTabIcon("all")}
             type="link"
             onClick={() => setActiveTab("all")}
-            className={activeTab === "all" ? "dark:bg-black/40" : ""}
+            className={activeTab === "all" ? "bg-primaryLight-300 dark:bg-purple-400 !text-white dark:!text-primaryLight2-500 !border-white dark:!border-primaryLight2-500" : ""}
           />
         </div>
         <div className="flex items-center justify-center">
@@ -230,7 +239,7 @@ const ConversationsBar = () => {
         ) : (
           <div className="space-y-1">
             {filteredConversations.map((conversation) => (
-              <ConversationItem key={conversation.id} conversation={conversation} currentUserId={user?.id} />
+              <ConversationItem key={conversation.id} conversation={conversation} currentUserId={user?.id}/>
             ))}
 
             {/* Loading indicator for infinite scroll */}

@@ -1,31 +1,41 @@
 "use client";
 
-import type React from "react";
+import React, { useEffect } from "react";
 import { Users } from "lucide-react";
 import { Avatar } from "../ui/Avatar";
 import { AvatarImage } from "../ui/AvatarImage";
 import { AvatarFallback } from "../ui/AvatarFallback";
 import { Conversation } from "@/type/conversation.type";
-import { useRouter } from "next/navigation";
-
+import { usePathname, useRouter } from "next/navigation";
 
 interface ConversationItemProps {
   conversation: Conversation;
   currentUserId?: string;
-  isActive?: boolean;
 }
 
 const ConversationItem: React.FC<ConversationItemProps> = ({
   conversation,
   currentUserId,
-  isActive = false,
 }) => {
-
+  const [isActive, setIsActive] = React.useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+
+  const handleCheckIsActive = () => {
+    if (pathname.includes(conversation.id)) {
+      setIsActive(true);
+    } else {
+      setIsActive(false);
+    }
+  };
+
+  useEffect(() => {
+    handleCheckIsActive();
+  });
 
   const handleClickConversation = () => {
     router.push(`/content/chats/${conversation.id}`);
-  }
+  };
   const formatTime = (timeString?: string) => {
     if (!timeString) return "";
 
@@ -95,10 +105,10 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
     <div
       className={`
         w-full p-3 rounded-lg cursor-pointer transition-colors duration-200
-        hover:bg-gray-100 dark:hover:bg-gray-700
+        hover:bg-white/65 dark:hover:bg-black/20 backdrop-blur-xl
         ${
           isActive
-            ? "bg-blue-50 dark:bg-blue-900/20 border-l-2 border-blue-500"
+            ? "bg-blue-50 dark:bg-blue-900/20 border-l-2 border-primaryLight-300 dark:border-primaryLight2-600 dark:bg-primaryLight2-800"
             : ""
         }
       `}

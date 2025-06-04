@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
 
 const page = () => {
   return (
     <>
-        This is Chats Page
+      <div className="w-full h-full flex items-center justify-center">
+        <div className="loader"></div>
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default page
+export default page;
