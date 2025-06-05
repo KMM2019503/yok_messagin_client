@@ -7,6 +7,8 @@ import { AvatarImage } from "../ui/AvatarImage";
 import { AvatarFallback } from "../ui/AvatarFallback";
 import { Conversation } from "@/type/conversation.type";
 import { usePathname, useRouter } from "next/navigation";
+import { useSelectedConversationStore } from "@/stores/selected-covnersation-store";
+import { IoPersonCircle } from "react-icons/io5";
 
 interface ConversationItemProps {
   conversation: Conversation;
@@ -18,6 +20,8 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   currentUserId,
 }) => {
   const [isActive, setIsActive] = React.useState(false);
+    const { changeSelectedConversation  } = useSelectedConversationStore();
+  
   const router = useRouter();
   const pathname = usePathname();
 
@@ -34,6 +38,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   });
 
   const handleClickConversation = () => {
+    changeSelectedConversation(conversation);
     router.push(`/content/chats/${conversation.id}`);
   };
   const formatTime = (timeString?: string) => {
@@ -123,11 +128,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
               alt={getDisplayName()}
             />
             <AvatarFallback className="text-sm">
-              {getConversationType() === "group" ? (
-                <Users className="w-5 h-5" />
-              ) : (
-                getInitials()
-              )}
+              <IoPersonCircle className="size-10 text-primaryLight-600"/>
             </AvatarFallback>
           </Avatar>
           {getConversationType() === "group" && (

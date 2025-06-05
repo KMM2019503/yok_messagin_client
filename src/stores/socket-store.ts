@@ -12,6 +12,7 @@ type SocketState = {
   connect: (authStore: AuthStore) => void;
   disconnect: () => void;
   updateLocation: (location: { latitude: number; longitude: number }) => void;
+  checkUserOnlineStatus: (userId: string) => boolean;
 };
 
 export const useSocketStore = create<SocketState>((set) => {
@@ -102,6 +103,10 @@ export const useSocketStore = create<SocketState>((set) => {
       if (currentSocket?.connected) {
         currentSocket.emit("updateUserLocation", location);
       }
+    },
+    checkUserOnlineStatus: (userId: string): boolean => {
+      const { onlineUser } = useSocketStore.getState();
+      return onlineUser.includes(userId);
     },
 
     disconnect: () => {

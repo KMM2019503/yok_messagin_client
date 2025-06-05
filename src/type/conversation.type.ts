@@ -1,3 +1,5 @@
+import { UserType } from "./user.type";
+
 export interface LastMessage {
   content: string;
   senderId: string;
@@ -9,11 +11,7 @@ export interface Member {
   userId: string;
   conversationId: string;
   joinedAt: string;
-  user: {
-    id: string;
-    userName: string;
-    profilePictureUrl: string;
-  };
+  user: UserType;
 }
 
 export interface Conversation {
