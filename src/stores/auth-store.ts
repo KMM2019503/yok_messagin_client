@@ -1,24 +1,13 @@
+import { UserType } from "@/type/user.type";
 import { createStore } from "zustand/vanilla";
 
 export type AuthState = {
   isAuthenticated: boolean;
-  user: {
-    id: string;
-    userName: string;
-    email: string;
-    userUniqueID: string;
-    profilePictureUrl?: string | null;
-  } | null;
+  user: UserType | null;
 };
 
 export type AuthAction = {
-  login: (user: {
-    id: string;
-    userName: string;
-    email: string;
-    userUniqueID: string;
-    profilePictureUrl: string | null;
-  }) => void;
+  login: (user: UserType) => void;
   logout: () => void;
 };
 
@@ -39,17 +28,11 @@ export const defaultInitState: AuthState = {
 export const createAuthStore = (initState: AuthState = defaultInitState) => {
   return createStore<AuthStore>()((set) => ({
     ...initState,
-    login: (user) =>
+    login: (user: UserType) =>
       set((state) => ({
         ...state,
         isAuthenticated: true,
-        user: {
-          id: user.id,
-          userName: user.userName,
-          email: user.email,
-          userUniqueID: user.userUniqueID,
-          profilePictureUrl: user.profilePictureUrl || null,
-        },
+        user: user,
       })),
     logout: () =>
       set((state) => ({

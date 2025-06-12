@@ -20,7 +20,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   currentUserId,
 }) => {
   const [isActive, setIsActive] = React.useState(false);
-    const { changeSelectedConversation  } = useSelectedConversationStore();
+  const { changeSelectedConversation  } = useSelectedConversationStore();
   
   const router = useRouter();
   const pathname = usePathname();

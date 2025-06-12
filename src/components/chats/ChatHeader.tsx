@@ -5,7 +5,6 @@ import { Avatar } from "../ui/Avatar";
 import { AvatarFallback } from "../ui/AvatarFallback";
 import { useSelectedConversationStore } from "@/stores/selected-covnersation-store";
 import { useAuthStore } from "@/providers/auth-store-provider";
-import { Member } from "@/type/conversation.type";
 import { UserType } from "@/type/user.type";
 import { AvatarImage } from "../ui/AvatarImage";
 import { useSocketStore } from "@/stores/socket-store";
@@ -13,8 +12,7 @@ import { formatDistanceToNow } from "date-fns";
 import { IoPersonCircle } from "react-icons/io5";
 
 const ChatHeader = () => {
-  const { selectedConversation } =
-    useSelectedConversationStore();
+  const { selectedConversation } = useSelectedConversationStore();
   const { user: currentUser } = useAuthStore((state) => state);
   const { checkUserOnlineStatus } = useSocketStore();
   const [otherMember, setOtherMember] = useState<UserType | null>(null);
@@ -50,7 +48,7 @@ const ChatHeader = () => {
           {otherMember && checkUserOnlineStatus(otherMember.id) ? (
             <span className="text-green-600 text-[10px]">Active</span>
           ) : (
-            <span className="primary-font-style text-xs spacin">
+            <span className="primary-font-style text-xs secondary-font-style">
               {getLastActiveTime(otherMember?.lastActiveAt)}
             </span>
           )}
@@ -69,7 +67,7 @@ const ChatHeader = () => {
           alt={getDisplayName()}
         />
         <AvatarFallback className="text-sm">
-          <IoPersonCircle className="size-10 text-primaryLight-600"/>
+          <IoPersonCircle className="size-10 text-primaryLight-600" />
         </AvatarFallback>
       </Avatar>
     </div>

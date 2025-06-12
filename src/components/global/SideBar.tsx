@@ -18,7 +18,7 @@ const SideBar = () => {
   return (
     <>
       <div
-        className={`w-full h-[calc(100vh - 1rem)] bg-primaryLight-100 dark:bg-primaryLight2-700 py-[0.3rem] lg:py-[1rem] px-[0.2rem] flex lg:flex-col justify-between items-center text-center shadow-2xl transition-all duration-300 ease-in-out ${
+        className={`w-full h-[calc(100vh - 1rem)] hidden lg:flex bg-primaryLight-100 dark:bg-primaryLight2-700 py-[0.3rem] lg:py-[1rem] px-[0.2rem] lg:flex-col justify-between items-center text-center shadow-2xl transition-all duration-300 ease-in-out ${
           isExpanded ? "lg:w-[8rem]" : "lg:w-[2.2rem]"
         }`}
       >

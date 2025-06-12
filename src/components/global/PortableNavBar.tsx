@@ -56,7 +56,7 @@ const PortableNavBar = () => {
   };
 
   return (
-    <div className="absolute top-0 right-0 z-50 p-2">
+    <div className="absolute top-0 right-0 z-50 p-2 hidden lg:block">
       <div className="group flex justify-center items-center relative w-10 h-10 hover:h-12 hover:w-64 transition-all duration-300 ease-in-out bg-primaryLight-100 dark:bg-primaryLight2-700 rounded-full overflow-hidden pl-2 py-2 pr-4 shadow-md cursor-pointer font-mono">
         {/* Avatar */}
         <div className="absolute left-1/2 transform -translate-x-1/2 group-hover:hidden transition-all duration-1000 ease-in-out">
