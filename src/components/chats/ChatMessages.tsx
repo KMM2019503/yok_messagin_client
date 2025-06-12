@@ -1,18 +1,25 @@
 "use client";
-import React, { useCallback, useEffect, useState, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Message from "./Message";
 import { MessageType } from "@/type/message.type";
 import { selectedConversationStore } from "@/stores/selected-covnersation-store";
 import InfiniteScroll from "react-infinite-scroll-component";
 import debounce from "lodash/debounce";
+import { useMessageStore } from "@/stores/messages";
 
 const ChatMessages = () => {
-  const [messages, setMessages] = useState<MessageType[]>([]);
   const [cursorId, setCursorId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
   const { selectedConversation } = selectedConversationStore();
+  const {
+    messages,
+    setMessages,
+    appendMessages,
+    clearMessages,
+  } = useMessageStore();
 
   const generateUrl = useCallback(
     (cursorId?: string) => {
@@ -45,7 +52,7 @@ const ChatMessages = () => {
       if (newMessages.length === 0) {
         setHasMore(false);
       } else {
-        setMessages((prev) => [...prev, ...newMessages]);
+        appendMessages(newMessages);
         const lastMsg: MessageType = newMessages[newMessages.length - 1];
         if (lastMsg.id) setCursorId(lastMsg.id);
         setHasMore(newMessages.length === 20);
@@ -55,7 +62,7 @@ const ChatMessages = () => {
     } finally {
       setLoading(false);
     }
-  }, [cursorId, hasMore, loading, generateUrl, selectedConversation]);
+  }, [cursorId, hasMore, loading, generateUrl, selectedConversation, appendMessages]);
 
   const debouncedFetch = useMemo(() => {
     return debounce(fetchMessages, 700);
@@ -63,13 +70,14 @@ const ChatMessages = () => {
 
   useEffect(() => {
     if (selectedConversation) {
-      setMessages([]);
+      clearMessages();
       setCursorId(null);
       setHasMore(true);
       debouncedFetch();
     }
 
     return () => {
+      clearMessages();
       debouncedFetch.cancel();
     };
   }, [selectedConversation]);
@@ -110,6 +118,9 @@ const ChatMessages = () => {
           />
         ))}
       </InfiniteScroll>
+
+      {/* Sending messaging box */}
+      <div>{/* your input box here */}</div>
     </div>
   );
 };

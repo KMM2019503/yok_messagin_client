@@ -86,9 +86,9 @@ const Message = ({
       )}
     >
       {!isAuthUserSender && shouldShowAvatar && (
-        <Avatar className="w-10 h-10">
+        <Avatar className="w-10 h-10 clear-glass-background ">
           <AvatarImage
-            src={currentMessageUser?.profilePictureUrl || "/placeholder.svg"}
+            src={currentMessageUser?.profilePictureUrl || 'https://avatar.iran.liara.run/public/'}
             alt={message.id + currentMessageUser?.userName}
           />
           <AvatarFallback className="text-sm">

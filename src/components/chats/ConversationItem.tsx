@@ -124,7 +124,7 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
         <div className="relative flex-shrink-0">
           <Avatar className="w-10 h-10">
             <AvatarImage
-              src={getAvatarSrc() || "/placeholder.svg"}
+              src={getAvatarSrc() || 'https://avatar.iran.liara.run/public/'}
               alt={getDisplayName()}
             />
             <AvatarFallback className="text-sm">
