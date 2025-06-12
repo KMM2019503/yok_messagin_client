@@ -82,7 +82,7 @@ const Message = ({
         "flex gap-2.5 mb-4",
         isAuthUserSender ? "justify-end" : "justify-start",
         !shouldShowAvatar &&
-          (isAuthUserSender ? "mr-12" : "ml-12")
+          (isAuthUserSender ? "" : "ml-12")
       )}
     >
       {!isAuthUserSender && shouldShowAvatar && (
@@ -115,18 +115,6 @@ const Message = ({
           </div>
         )}
       </div>
-
-      {isAuthUserSender && shouldShowAvatar && (
-        <Avatar className="w-10 h-10">
-          <AvatarImage
-            src={currentMessageUser?.profilePictureUrl || "/placeholder.svg"}
-            alt={message.id + currentMessageUser?.userName}
-          />
-          <AvatarFallback className="text-sm">
-            <IoPersonCircle className="size-10 text-primaryLight-600" />
-          </AvatarFallback>
-        </Avatar>
-      )}
     </div>
   );
 };

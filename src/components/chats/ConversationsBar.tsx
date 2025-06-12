@@ -25,13 +25,16 @@ import ConversationItem from "./ConversationItem";
 import LinkButton from "../ui/link";
 import { useSelectedConversationStore } from "@/stores/selected-covnersation-store";
 
+//node module package
+import { cn } from "@/lib/utils";
+
 const ConversationsBar = () => {
   // package //
   const router = useRouter();
 
   // store //
   const { user } = useAuthStore((state) => state);
-  const { changeSelectedConversation} = useSelectedConversationStore();
+  const { changeSelectedConversation, selectedConversation } = useSelectedConversationStore();
 
   // state //
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -73,31 +76,6 @@ const ConversationsBar = () => {
   ): "direct" | "group" => {
     return conversation.members.length === 2 ? "direct" : "group";
   };
-
-  const getConversationTitle = (
-    conversation: Conversation,
-    currentUserId?: string
-  ): string => {
-    if (conversation.members.length === 2) {
-      // Direct message - show the other user's name
-      const otherMember = conversation.members.find(
-        (member) => member.userId !== currentUserId
-      );
-      return otherMember?.user.userName || "Unknown User";
-    } else {
-      // Group chat - create a title from member names
-      const memberNames = conversation.members
-        .slice(0, 3)
-        .map((member) => member.user.userName)
-        .join(", ");
-
-      if (conversation.members.length > 3) {
-        return `${memberNames} and ${conversation.members.length - 3} others`;
-      }
-      return memberNames;
-    }
-  };
-
   const handleLoadMore = useCallback(() => {
     if (nextCursor && hasMore && !loadingRef.current) {
       handleFetchConversations(nextCursor);
@@ -187,7 +165,8 @@ const ConversationsBar = () => {
   };
   // use Effect
   useEffect(() => {
-    if (conversations.length > 0) {
+    const isMobile = window.innerWidth <= 576;
+    if (!isMobile && conversations.length > 0) {
       changeSelectedConversation(conversations[0]);
       router.push(`/content/chats/${conversations[0].id}`);
     }
@@ -200,7 +179,12 @@ const ConversationsBar = () => {
   }, [user, handleFetchConversations]);
 
   return (
-    <div className="w-[20.5rem] hidden overflow-hidden h-[calc(100vh-16px)] rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 lg:flex flex-col">
+    <div
+      className={cn(
+        "w-full lg:w-[20.5rem] overflow-hidden h-screen lg:h-[calc(100vh-16px)] rounded-lg bg-primaryLight-100 dark:bg-primaryLight2-700 lg:flex flex-col",
+        selectedConversation ? "hidden lg:block" : "justify-start"
+      )}
+    >
       {/* Header with tabs */}
       <div className="grid grid-cols-3 justify-center items-center py-[0.5rem] px-[0.8rem]">
         <div className="flex items-center justify-center">
@@ -260,9 +244,9 @@ const ConversationsBar = () => {
         ref={scrollContainerRef}
       >
         {!user ? (
-          <div className="flex items-center justify-center py-8">
-            <Loader2 className="size-6 animate-spin" />
-            <span className="ml-2 text-sm">Loading...</span>
+          <div className="flex items-center justify-center py-8 h-full">
+            <div className="loader4">
+            </div>
           </div>
         ) : error ? (
           <div className="flex flex-col items-center justify-center py-8 px-4">
@@ -304,8 +288,9 @@ const ConversationsBar = () => {
             {/* Loading indicator for infinite scroll */}
             {loading && hasMore && (
               <div className="py-4 flex items-center justify-center">
-                <Loader2 className="size-4 animate-spin mr-2" />
-                <span className="text-sm text-gray-500">Loading more...</span>
+                <div className="loader4">
+
+                </div>
               </div>
             )}
 
