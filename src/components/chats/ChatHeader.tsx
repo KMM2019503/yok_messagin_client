@@ -11,6 +11,7 @@ import { useSocketStore } from "@/stores/socket-store";
 import { formatDistanceToNow } from "date-fns";
 import { IoChevronBackOutline, IoPersonCircle } from "react-icons/io5";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 const ChatHeader = () => {
   const router = useRouter();
@@ -51,9 +52,9 @@ const ChatHeader = () => {
     router.push('/content/chats')
   }
   return (
-    <div className="w-full flex items-center justify-between space-x-3">
+    <div className='w-full flex items-center justify-between lg:justify-end space-x-3'>
       {/* action */}
-      <div>
+      <div className="lg:hidden">
         <button className="clear-glass-background  p-2 hover:bg-gray-200 transition" onClick={handleClickBackBtn}>
           <IoChevronBackOutline className="size-4 primary-font-style"/>
         </button>
@@ -76,7 +77,7 @@ const ChatHeader = () => {
 
         <Avatar className="w-10 h-10">
           <AvatarImage
-            src={otherMember?.profilePictureUrl || "/placeholder.svg"}
+            src={otherMember?.profilePictureUrl || 'https://avatar.iran.liara.run/public/'}
             alt={getDisplayName()}
           />
           <AvatarFallback className="text-sm">
