@@ -109,11 +109,11 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   return (
     <div
       className={`
-        w-full p-3 rounded-lg cursor-pointer transition-colors duration-200
+        w-full p-3 rounded-lg glass-background cursor-pointer transition-colors duration-200
         hover:bg-white/65 dark:hover:bg-black/20 backdrop-blur-xl
         ${
           isActive
-            ? "bg-blue-50 dark:bg-blue-900/20 border-l-2 border-primaryLight-300 dark:border-primaryLight2-600 dark:bg-primaryLight2-800"
+            ? "border-l-2 border-primaryLight-300 dark:border-primaryLight2-600 dark:bg-primaryLight2-800"
             : ""
         }
       `}

@@ -8,8 +8,6 @@
   }
 }
 
-
-
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -65,8 +63,6 @@
     --chart-5: 340 75% 55%;
   }
 }
-
-
 
 @layer base {
   * {
@@ -139,7 +135,7 @@
   animation: l15 1s infinite linear;
 }
 .loader::before,
-.loader::after {    
+.loader::after {
   content: "";
   grid-area: 1/1;
   margin: 2px;
@@ -151,8 +147,10 @@
   margin: 8px;
   animation-duration: 3s;
 }
-@keyframes l15{ 
-  100%{transform: rotate(1turn)}
+@keyframes l15 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
 
 /* HTML: <div class="loader"></div> */
@@ -163,27 +161,37 @@
   border-radius: 50%;
   box-shadow: 19px 0 0 7px, 38px 0 0 3px, 57px 0 0 0;
   transform: translateX(-38px);
-  animation: l21 .5s infinite alternate linear;
+  animation: l21 0.5s infinite alternate linear;
 }
 
 @keyframes l21 {
-  50%  {box-shadow: 19px 0 0 3px, 38px 0 0 7px, 57px 0 0 3px}
-  100% {box-shadow: 19px 0 0 0  , 38px 0 0 3px, 57px 0 0 7px}
+  50% {
+    box-shadow: 19px 0 0 3px, 38px 0 0 7px, 57px 0 0 3px;
+  }
+  100% {
+    box-shadow: 19px 0 0 0, 38px 0 0 3px, 57px 0 0 7px;
+  }
 }
 
 /* HTML: <div class="loader"></div> */
 .loader3 {
   height: 4px;
   width: 130px;
-  --c:no-repeat linear-gradient(#6100ee 0 0);
-  background: var(--c),var(--c),#d7b8fc;
+  --c: no-repeat linear-gradient(#6100ee 0 0);
+  background: var(--c), var(--c), #d7b8fc;
   background-size: 60% 100%;
   animation: l16 3s infinite;
 }
 @keyframes l16 {
-  0%   {background-position:-150% 0,-150% 0}
-  66%  {background-position: 250% 0,-150% 0}
-  100% {background-position: 250% 0, 250% 0}
+  0% {
+    background-position: -150% 0, -150% 0;
+  }
+  66% {
+    background-position: 250% 0, -150% 0;
+  }
+  100% {
+    background-position: 250% 0, 250% 0;
+  }
 }
 
 /* HTML: <div class="loader"></div> */
@@ -193,15 +201,12 @@
   display: grid;
 }
 .loader4::before,
-.loader4::after {    
-  content:"";
+.loader4::after {
+  content: "";
   grid-area: 1/1;
-  --c:no-repeat radial-gradient(farthest-side,#25b09b 92%,#0000);
-  background: 
-    var(--c) 50%  0, 
-    var(--c) 50%  100%, 
-    var(--c) 100% 50%, 
-    var(--c) 0    50%;
+  --c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
+  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%,
+    var(--c) 0 50%;
   background-size: 12px 12px;
   animation: l12 1s infinite;
 }
@@ -209,9 +214,61 @@
   margin: 4px;
   filter: hue-rotate(45deg);
   background-size: 6px 6px;
-  animation-timing-function: linear
+  animation-timing-function: linear;
 }
 
-@keyframes l12 { 
-  100%{transform: rotate(.5turn)}
+@keyframes l12 {
+  100% {
+    transform: rotate(0.5turn);
+  }
+}
+
+/* Glass Background */
+
+.clear-glass-background {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.19);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.2px);
+  -webkit-backdrop-filter: blur(10.2px);
+}
+
+.clear-glass-background-dark {
+  /* From https://css.glass */
+  background: rgba(32, 32, 32, 0.46);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10.2px);
+  -webkit-backdrop-filter: blur(10.2px);
+}
+
+.glass-background {
+  background: rgba(35, 220, 255, 0.25);
+  border-radius: 16px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.dark .glass-background {
+  background: rgba(69, 20, 108, 0.25);
+  border-radius: 16px;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+
+.chat-background {
+  background: rgba(0, 150, 199, 0.24);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.dark .chat-background {
+  background: rgba(90, 24, 154, 0.44);
+  backdrop-filter: blur(8.9px);
+  -webkit-backdrop-filter: blur(8.9px);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 }

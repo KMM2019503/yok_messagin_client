@@ -98,15 +98,15 @@ const Message = ({
       )}
 
       <div className={cn("max-w-64 md:max-w-80 flex flex-col")}>
-        <div className="px-3.5 py-[0.5rem] bg-gray-100 rounded justify-start items-center gap-3 inline-flex">
-          <h5 className="text-gray-900 text-sm font-normal leading-snug">
+        <div className="px-3.5 py-[0.5rem] chat-background rounded justify-start items-center gap-3 inline-flex">
+          <h5 className="primary-font-style text-sm font-normal">
             {message.content}
           </h5>
         </div>
 
         {message.senderId !== previousMessageSenderId && (
           <div className="flex w-full justify-end items-center gap-2 mb-2.5 h-full p-[0.10rem]">
-            <span className="text-gray-500 text-xs font-normal leading-4 py-1">
+            <span className="secondary-font-style text-xs font-normal leading-4 py-1">
               {formatTime(message.createdAt)}
             </span>
             {message.status.status === "SENT" && (
