@@ -48,6 +48,7 @@ export const useSocketStore = create<SocketState>((set) => {
             email: userData.email,
             userUniqueID: userData.userUniqueID,
             profilePictureUrl: userData.profilePictureUrl || null,
+            lastActiveAt: userData.lastActiveAt
           });
         }
       });
