@@ -81,14 +81,16 @@ const Message = ({
       className={cn(
         "flex gap-2.5 mb-4",
         isAuthUserSender ? "justify-end" : "justify-start",
-        !shouldShowAvatar &&
-          (isAuthUserSender ? "" : "ml-12")
+        !shouldShowAvatar && (isAuthUserSender ? "" : "ml-12")
       )}
     >
       {!isAuthUserSender && shouldShowAvatar && (
         <Avatar className="w-10 h-10 clear-glass-background ">
           <AvatarImage
-            src={currentMessageUser?.profilePictureUrl || 'https://avatar.iran.liara.run/public/'}
+            src={
+              currentMessageUser?.profilePictureUrl ||
+              "https://avatar.iran.liara.run/public/"
+            }
             alt={message.id + currentMessageUser?.userName}
           />
           <AvatarFallback className="text-sm">
@@ -97,8 +99,19 @@ const Message = ({
         </Avatar>
       )}
 
-      <div className={cn("max-w-64 md:max-w-80 flex flex-col")}>
-        <div className="px-3.5 py-[0.5rem] chat-background rounded justify-start items-center gap-3 inline-flex">
+      <div
+        className={cn(
+          "max-w-64 md:max-w-80 flex flex-col",
+          shouldShowAvatar && "mt-5",
+          isAuthUserSender && 'pr-2'
+        )}
+      >
+        <div
+          className={cn(
+            "px-3.5 py-[0.5rem] chat-background rounded-xl justify-start items-center gap-3 inline-flex",
+            shouldShowAvatar && "rounded-tl-none"
+          )}
+        >
           <h5 className="primary-font-style text-sm font-normal">
             {message.content}
           </h5>

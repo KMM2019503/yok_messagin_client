@@ -239,7 +239,7 @@ const ConversationsBar = () => {
 
       {/* Conversations list */}
       <div
-        className="flex-1 overflow-y-auto px-2 scroll-container-light dark:scroll-container"
+        className="flex-1 overflow-y-auto py-3 px-2 scroll-container-light dark:scroll-container"
         onScroll={throttledHandleScroll()}
         ref={scrollContainerRef}
       >
@@ -276,7 +276,7 @@ const ConversationsBar = () => {
             </button>
           </div>
         ) : (
-          <div className="space-y-1">
+          <div className="space-y-2">
             {filteredConversations.map((conversation) => (
               <ConversationItem
                 key={conversation.id}
