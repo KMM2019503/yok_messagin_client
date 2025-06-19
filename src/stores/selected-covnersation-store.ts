@@ -1,10 +1,11 @@
 import { create } from "zustand";
-import { Conversation } from "@/type/conversation.type";
+import { Conversation, LastMessage } from "@/type/conversation.type";
 
 type SelectedConversationType = {
   selectedConversation: Conversation | null;
   changeSelectedConversation: (conversation: Conversation) => void;
   cleanSelectedConversation: () => void;
+  updateLastMessage: (lastMessage: LastMessage) => void;
 };
 
 const selectedConversationStore = create<SelectedConversationType>(
@@ -16,7 +17,14 @@ const selectedConversationStore = create<SelectedConversationType>(
     cleanSelectedConversation: () => {
       set({ selectedConversation: null });
     },
-  })
+    updateLastMessage: (lastMessage) => {
+      console.log('enter', lastMessage);
+      set((state) => state.selectedConversation
+        ? { selectedConversation: { ...state.selectedConversation, lastMessage } }
+        : { selectedConversation: null }
+      );
+    }
+  }),
 );
 
 // Export the store instance for direct usage in non-component code

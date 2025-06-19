@@ -228,7 +228,6 @@
 .clear-glass-background {
   /* From https://css.glass */
   background: rgba(255, 255, 255, 0.19);
-  border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10.2px);
   -webkit-backdrop-filter: blur(10.2px);
@@ -237,7 +236,6 @@
 .clear-glass-background-dark {
   /* From https://css.glass */
   background: rgba(32, 32, 32, 0.46);
-  border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10.2px);
   -webkit-backdrop-filter: blur(10.2px);
@@ -245,18 +243,16 @@
 
 .glass-background {
   background: rgba(35, 220, 255, 0.25);
-  border-radius: 16px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
 .dark .glass-background {
   background: rgba(69, 20, 108, 0.25);
-  border-radius: 16px;
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
 }
 
 .chat-background {

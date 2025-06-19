@@ -7,7 +7,6 @@ import { cn } from "@/lib/utils";
 import {
   format,
   differenceInHours,
-  parseISO,
   formatDistanceToNowStrict,
 } from "date-fns";
 //Components
@@ -103,22 +102,31 @@ const Message = ({
         className={cn(
           "max-w-64 md:max-w-80 flex flex-col",
           shouldShowAvatar && "mt-5",
-          isAuthUserSender && 'pr-2'
+          isAuthUserSender && "pr-2"
         )}
       >
         <div
           className={cn(
             "px-3.5 py-[0.5rem] chat-background rounded-xl justify-start items-center gap-3 inline-flex",
-            shouldShowAvatar && "rounded-tl-none"
+            shouldShowAvatar
+              ? isAuthUserSender
+                ? "rounded-tr-none"
+                : "rounded-tl-none"
+              : ""
           )}
         >
-          <h5 className="primary-font-style text-sm font-normal">
+          <span className="primary-font-style text-sm font-normal">
             {message.content}
-          </h5>
+          </span>
         </div>
 
         {message.senderId !== previousMessageSenderId && (
-          <div className="flex w-full justify-end items-center gap-2 mb-2.5 h-full p-[0.10rem]">
+          <div
+            className={cn(
+              "flex w-full items-center gap-2 mb-2.5 h-full p-[0.10rem]",
+              isAuthUserSender ? "justify-start" : "justify-end"
+            )}
+          >
             <span className="secondary-font-style text-xs font-normal leading-4 py-1">
               {formatTime(message.createdAt)}
             </span>

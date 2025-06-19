@@ -109,11 +109,11 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   return (
     <div
       className={`
-        w-full p-3 rounded-lg glass-background cursor-pointer transition-colors duration-200
+        w-full p-3 rounded-md glass-background cursor-pointer transition-colors duration-200
         hover:bg-white/65 dark:hover:bg-black/20 backdrop-blur-xl
         ${
           isActive
-            ? "border-l-2 border-primaryLight-300 dark:border-primaryLight2-600 dark:bg-primaryLight2-800"
+            ? "border-l-[2px] border-b-[2px] border-primaryLight-300 !bg-white/50 dark:border-primaryLight2-600 dark:bg-primaryLight2-800"
             : ""
         }
       `}
@@ -157,12 +157,6 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
           {conversation.lastMessage?.content && (
             <p className="text-xs secondary-font-style truncate">
               {conversation.lastMessage.content}
-            </p>
-          )}
-
-          {getConversationType() === "group" && (
-            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-              {conversation.members.length} members
             </p>
           )}
         </div>
