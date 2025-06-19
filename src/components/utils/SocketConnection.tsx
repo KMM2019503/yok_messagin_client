@@ -3,13 +3,19 @@
 import { useEffect } from "react";
 import { useSocketStore } from "@/stores/socket-store";
 import { useAuthStore } from "@/providers/auth-store-provider";
+import { useMessageStore } from "@/stores/messages";
+import { useConversationsStore } from "@/stores/conversations-store";
+import { useSelectedConversationStore } from "@/stores/selected-covnersation-store";
 
 const SocketConnection = () => {
   const { connect, disconnect, isConnected, updateLocation } = useSocketStore();
   const authStore = useAuthStore((state) => state);
+  const messageStore = useMessageStore();
+  const conversationStore = useConversationsStore();
+  const selectedConversationStore = useSelectedConversationStore();
 
   useEffect(() => {
-    connect(authStore);
+    connect(authStore, messageStore, conversationStore, selectedConversationStore);
 
     return () => {
       disconnect();

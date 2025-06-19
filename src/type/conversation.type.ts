@@ -2,7 +2,6 @@ import { UserType } from "./user.type";
 
 export interface LastMessage {
   content: string;
-  senderId: string;
   createdAt: string;
 }
 

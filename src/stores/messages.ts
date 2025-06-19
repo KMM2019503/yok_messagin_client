@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { MessageType } from "@/type/message.type";
 
-type MessageStoreType = {
+export type MessageStore = {
   messages: MessageType[];
   setMessages: (newMessages: MessageType[]) => void;
   appendMessages: (moreMessages: MessageType[]) => void;
@@ -10,7 +10,7 @@ type MessageStoreType = {
   clearMessages: () => void;
 };
 
-export const useMessageStore = create<MessageStoreType>((set) => ({
+export const useMessageStore = create<MessageStore>((set) => ({
   messages: [],
   addMessages: (message) =>
     set((state) => ({ messages: [...[message], ...state.messages] })),

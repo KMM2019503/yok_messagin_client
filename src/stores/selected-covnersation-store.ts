@@ -1,11 +1,12 @@
 import { create } from "zustand";
 import { Conversation, LastMessage } from "@/type/conversation.type";
 
-type SelectedConversationType = {
+export type SelectedConversationType = {
   selectedConversation: Conversation | null;
   changeSelectedConversation: (conversation: Conversation) => void;
   cleanSelectedConversation: () => void;
   updateLastMessage: (lastMessage: LastMessage) => void;
+  getSelectedConversation: () => String | null;
 };
 
 const selectedConversationStore = create<SelectedConversationType>(
@@ -18,13 +19,20 @@ const selectedConversationStore = create<SelectedConversationType>(
       set({ selectedConversation: null });
     },
     updateLastMessage: (lastMessage) => {
-      console.log('enter', lastMessage);
-      set((state) => state.selectedConversation
-        ? { selectedConversation: { ...state.selectedConversation, lastMessage } }
-        : { selectedConversation: null }
+      console.log("enter", lastMessage);
+      set((state) =>
+        state.selectedConversation
+          ? {
+              selectedConversation: {
+                ...state.selectedConversation,
+                lastMessage,
+              },
+            }
+          : { selectedConversation: null }
       );
-    }
-  }),
+    },
+    getSelectedConversation: () => get().selectedConversation?.id || null,
+  })
 );
 
 // Export the store instance for direct usage in non-component code

@@ -4,12 +4,20 @@ import { io, Socket } from "socket.io-client";
 import { AuthStore } from "./auth-store";
 import { toast } from "@/hooks/use-toast";
 import { friendStore } from "./friends";
+import { MessageStore } from "./messages";
+import { ConversationsStore } from "./conversations-store";
+import { SelectedConversationType } from "./selected-covnersation-store";
 
 type SocketState = {
   socket: Socket | null;
   isConnected: boolean;
   onlineUser: string[];
-  connect: (authStore: AuthStore) => void;
+  connect: (
+    authStore: AuthStore,
+    messageStore: MessageStore,
+    conversationStore: ConversationsStore,
+    selectedConversationStore: SelectedConversationType
+  ) => void;
   disconnect: () => void;
   updateLocation: (location: { latitude: number; longitude: number }) => void;
   checkUserOnlineStatus: (userId: string) => boolean;
@@ -23,7 +31,12 @@ export const useSocketStore = create<SocketState>((set) => {
     isConnected: false,
     onlineUser: [],
 
-    connect: (authStore) => {
+    connect: (
+      authStore,
+      messageStore,
+      conversationStore,
+      selectedConversationStore
+    ) => {
       if (socket?.connected) return;
 
       socket = io(process.env.NEXT_PUBLIC_SOCKET_SERVER_URL, {
@@ -48,7 +61,7 @@ export const useSocketStore = create<SocketState>((set) => {
             email: userData.email,
             userUniqueID: userData.userUniqueID,
             profilePictureUrl: userData.profilePictureUrl || null,
-            lastActiveAt: userData.lastActiveAt
+            lastActiveAt: userData.lastActiveAt,
           });
         }
       });
@@ -87,6 +100,33 @@ export const useSocketStore = create<SocketState>((set) => {
             title: "Friend Request Response",
             description: data.message,
           });
+        }
+      });
+
+      socket.on("incomingNewMessage", (data) => {
+        const newMessageAudio = new Audio("/sounds/mixkit-long-pop-2358.wav");
+        if (data) {
+          conversationStore.updateLastMessage(data.updatedConversation.id, {
+            content: data.message.content,
+            createdAt: data.message.createdAt,
+          });
+          if (
+            selectedConversationStore.getSelectedConversation() ===
+            data.message.conversationId
+          ) {
+            messageStore.addMessages({
+              ...data.message,
+              senderId: data.message.sender.id,
+            });
+          } else {
+            newMessageAudio.play().catch((err) => {
+              console.log("Audio play prevented:", err);
+            });
+            toast({
+              title: `New Message Form ${data.message.sender.userName}`,
+              description: data.message.content,
+            });
+          }
         }
       });
 

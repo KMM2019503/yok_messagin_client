@@ -17,7 +17,9 @@ type ConversationsActions = {
   updateLastMessage: (conversationId: string, lastMessage: LastMessage) => void;
 };
 
-export const useConversationsStore = create<ConversationsState & ConversationsActions>((set) => ({
+export type ConversationsStore = ConversationsState & ConversationsActions;
+
+export const useConversationsStore = create<ConversationsStore>((set) => ({
   conversations: [],
   error: null,
   nextCursor: undefined,

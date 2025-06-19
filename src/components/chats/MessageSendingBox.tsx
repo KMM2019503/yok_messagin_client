@@ -68,8 +68,7 @@ const MessageSendingBox = () => {
           });
           updateLastMessage(selectedConversation.id, {
             content: data.message.content,
-            createdAt: data.message.createdAt,
-            senderId: currentUser.id,
+            createdAt: data.message.createdAt
           })
       }
     } catch (error) {
