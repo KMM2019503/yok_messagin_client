@@ -108,15 +108,6 @@ const ConversationsBar = () => {
     }
   }, [nextCursor, handleFetchConversations]);
 
-  // Effects
-  useEffect(() => {
-    const isMobile = window.innerWidth <= 576;
-    if (!isMobile && conversations.length > 0 && !selectedConversation) {
-      changeSelectedConversation(conversations[0]);
-      router.push(`/content/chats/${conversations[0].id}`);
-    }
-  }, [conversations, selectedConversation]);
-
   useEffect(() => {
     if (user && conversations.length === 0 && !loading) {
       handleFetchConversations();
@@ -171,7 +162,14 @@ const ConversationsBar = () => {
             dataLength={conversations.length}
             next={loadMore}
             hasMore={!!hasMore}
-            style={{height: "100%", overflow: "hidden", padding: "0.8rem 0rem", display: "flex", flexDirection: "column", gap: "0.35rem"}}
+            style={{
+              height: "100%",
+              overflow: "hidden",
+              padding: "0.8rem 0rem",
+              display: "flex",
+              flexDirection: "column",
+              gap: "0.35rem",
+            }}
             loader={
               loading && (
                 <div className="py-4 flex items-center justify-center">
@@ -188,13 +186,13 @@ const ConversationsBar = () => {
             }
             scrollableTarget="scrollableDiv"
           >
-              {conversations.map((conversation) => (
-                <ConversationItem
-                  key={conversation.id}
-                  conversation={conversation}
-                  currentUserId={user?.id}
-                />
-              ))}
+            {conversations.map((conversation) => (
+              <ConversationItem
+                key={conversation.id}
+                conversation={conversation}
+                currentUserId={user?.id}
+              />
+            ))}
           </InfiniteScroll>
         )}
       </div>

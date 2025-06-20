@@ -1,5 +1,3 @@
-"use client";
-
 import ConversationsBar from "@/components/chats/ConversationsBar";
 import PortableNavBar from "@/components/global/PortableNavBar";
 
@@ -11,7 +9,7 @@ export default function RootLayout({
   return (
     <>
       <PortableNavBar />
-      <ConversationsBar/>
+      <ConversationsBar />
       {children}
     </>
   );

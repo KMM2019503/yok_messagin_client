@@ -1,13 +1,7 @@
-import React from "react";
-
-const page = () => {
+export default function ChatsPage() {
   return (
-    <>
-      <div className="w-full h-full lg:flex items-center justify-center hidden">
-        <div className="loader"></div>
-      </div>
-    </>
+    <div className="flex-1 flex items-center justify-center text-muted-foreground">
+      <span>Pls Select to talk</span>
+    </div>
   );
-};
-
-export default page;
+}

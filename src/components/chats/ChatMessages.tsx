@@ -24,30 +24,29 @@ import Message from "./Message";
 import MessageSendingBox from "./MessageSendingBox";
 
 const ChatMessages = () => {
-  const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  
   // Ref //
   const cursorIdRef = useRef<string | null>(null);
   const loadingRef = useRef(false);
 
-  const { selectedConversation } = selectedConversationStore();
+  const selectedConversationId = selectedConversationStore(
+    (state) => state.selectedConversation?.id
+  );
   const { messages, appendMessages, clearMessages } = useMessageStore();
 
   const generateUrl = useCallback(
     (cursorId?: string) => {
-      const base = `${process.env.NEXT_PUBLIC_BASE_URL}/conversations/get-messages/${selectedConversation?.id}?take=20`;
+      const base = `${process.env.NEXT_PUBLIC_BASE_URL}/conversations/get-messages/${selectedConversationId}?take=20`;
       return cursorId ? `${base}&cursorId=${cursorId}` : base;
     },
-    [selectedConversation?.id]
+    [selectedConversationId]
   );
 
-  const fetchMessages = useCallback(async () => {
-    if (loadingRef.current || !hasMore || !selectedConversation) return;
-
-    setLoading(true);
+  const fetchMessages = async () => {
+    if (loadingRef.current || !hasMore || !selectedConversationId) return;
     loadingRef.current = true;
+
     setError(null);
 
     try {
@@ -75,21 +74,14 @@ const ChatMessages = () => {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
-      setLoading(false);
       loadingRef.current = false;
     }
-  }, [
-    hasMore,
-    loading,
-    generateUrl,
-    selectedConversation?.id,
-    appendMessages,
-  ]);
+  };
 
   const debouncedFetchRef = useRef(debounce(() => fetchMessages(), 700));
 
   useEffect(() => {
-    if (selectedConversation) {
+    if (selectedConversationId) {
       cursorIdRef.current = null;
       setHasMore(true);
       fetchMessages();
@@ -99,7 +91,7 @@ const ChatMessages = () => {
       clearMessages();
       debouncedFetchRef.current.cancel();
     };
-  }, [selectedConversation?.id]);
+  }, [selectedConversationId]);
 
   return (
     <div className="flex flex-col h-full">
