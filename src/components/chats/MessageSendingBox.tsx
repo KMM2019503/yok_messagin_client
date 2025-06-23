@@ -5,7 +5,7 @@ import { VscSend } from "react-icons/vsc";
 // store //
 import { selectedConversationStore } from "@/stores/selected-covnersation-store";
 import { useAuthStore } from "@/providers/auth-store-provider";
-import { useMessageStore } from "@/stores/messages"; 
+import { useMessageStore } from "@/stores/messages";
 // type //
 import { UserType } from "@/type/user.type";
 import { useConversationsStore } from "@/stores/conversations-store";
@@ -13,9 +13,9 @@ import { useConversationsStore } from "@/stores/conversations-store";
 const MessageSendingBox = () => {
   // stores //
   const { selectedConversation } = selectedConversationStore();
-  const {updateLastMessage} = useConversationsStore();
+  const { updateLastMessage } = useConversationsStore();
   const { user: currentUser } = useAuthStore((state) => state);
-  const {addMessages} = useMessageStore();
+  const { addMessages } = useMessageStore();
 
   // components state
   const [otherMember, setOtherMember] = useState<UserType | null>(null);
@@ -24,7 +24,11 @@ const MessageSendingBox = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleSendMessage = async () => {
-    if (!messageContent.trim() || !otherMember?.id || !selectedConversation?.id) {
+    if (
+      !messageContent.trim() ||
+      !otherMember?.id ||
+      !selectedConversation?.id
+    ) {
       setError("Message cannot be empty");
       return;
     }
@@ -33,9 +37,9 @@ const MessageSendingBox = () => {
     setError(null);
 
     try {
-        if (!otherMember.id) {
-           throw new Error("other member id is null") 
-        }
+      if (!otherMember.id) {
+        throw new Error("other member id is null");
+      }
 
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/messages/direct-message`,
@@ -62,14 +66,14 @@ const MessageSendingBox = () => {
 
       const data = await res.json();
       if (currentUser) {
-          addMessages({
-            ...data.message,
-            senderId: currentUser.id
-          });
-          updateLastMessage(selectedConversation.id, {
-            content: data.message.content,
-            createdAt: data.message.createdAt
-          })
+        addMessages({
+          ...data.message,
+          senderId: currentUser.id,
+        });
+        updateLastMessage(selectedConversation.id, {
+          content: data.message.content,
+          createdAt: data.message.createdAt,
+        });
       }
     } catch (error) {
       console.log("🚀 ~ handleSendMessage ~ error:", error);
@@ -97,24 +101,23 @@ const MessageSendingBox = () => {
   }, [selectedConversation, currentUser]);
 
   return (
-    <div className="flex items-center w-full h-full p-1 lg:p-2">
+    <div className="flex items-center w-full h-10 sm:h-12 md:h-14 p-1 md:p-2">
       <input
         type="text"
         value={messageContent}
         onChange={(e) => setMessageContent(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="w-full pl-3 text-sm md:text-base font-normal h-full primary-font-style font-sans rounded-md rounded-tr-none rounded-br-none focus:ring-0 focus:outline-none"
+        className="w-full text-sm md:text-base font-normal h-full px-3 py-1 rounded-md rounded-tr-none rounded-br-none focus:ring-0 focus:outline-none"
         placeholder="Type a message..."
         disabled={isLoading}
       />
       <button
         onClick={handleSendMessage}
         disabled={isLoading || !messageContent.trim()}
-        className="px-3 group py-1 md:py-2 h-full glass-background !bg-primaryLight-300 !shadow-none rounded-md rounded-tl-none rounded-bl-none disabled:opacity-50"
+        className="px-3 py-1 md:py-2 h-full glass-background !bg-primaryLight-300 !shadow-none rounded-md rounded-tl-none rounded-bl-none disabled:opacity-50"
       >
         <VscSend className="size-5 md:size-6 primary-text-style !text-primaryLight2-300 group-focus:scale-110 transition" />
       </button>
-      {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
     </div>
   );
 };

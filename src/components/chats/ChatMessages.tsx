@@ -94,10 +94,10 @@ const ChatMessages = () => {
   }, [selectedConversationId]);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-full w-full">
       <div
         id="chat-container"
-        className="w-full overflow-y-auto flex flex-col-reverse p-2 md:px-4 md:py-3 scroll-container h-[calc(100vh-60px-55px)] lg:h-[calc(100vh-16vh)]"
+        className="flex-1 w-full overflow-y-auto flex flex-col-reverse p-2 md:px-4 md:py-3 scroll-container"
       >
         <InfiniteScroll
           dataLength={messages.length}
@@ -132,7 +132,7 @@ const ChatMessages = () => {
         </InfiniteScroll>
       </div>
       {/* Sending messaging box */}
-      <div className="flex lg:px-3 lg:pb-2 pb-1 flex-1">
+      <div className="px-2 pt-1 pb-2 md:px-3 flex-shrink-0">
         <MessageSendingBox />
       </div>
     </div>
