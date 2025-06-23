@@ -18,11 +18,11 @@ const SideBar = () => {
   return (
     <>
       <div
-        className={`w-full h-[calc(100vh - 1rem)] hidden lg:flex bg-primaryLight-100 dark:bg-primaryLight2-700 py-[0.3rem] lg:py-[1rem] px-[0.2rem] lg:flex-col justify-between items-center text-center shadow-2xl transition-all duration-300 ease-in-out ${
+        className={`h-screen flex flex-col justify-between py-[1rem] lg:py-[1rem] px-[0.2rem] bg-primaryLight-400 dark:bg-primaryLight2-700 shadow-2xl transition-all duration-300 ease-in-out ${
           isExpanded ? "lg:w-[8rem]" : "lg:w-[2.2rem]"
         }`}
       >
-        <div className="lg:hidden relative size-[2.2rem] rounded-full overflow-hidden">
+        <div className="flex w-full justify-center relative size-[1.3rem] rounded-full overflow-hidden">
           <Image
             src="/images/logo.png"
             alt="logo"
@@ -31,60 +31,33 @@ const SideBar = () => {
           />
         </div>
         {/* menu icon */}
-        <div className="hidden lg:block">
-          {!isExpanded ? (
-            <LinkButton
-              icon={<MdOutlineKeyboardDoubleArrowRight className="size-3" />}
-              type="button"
-              className="px-1 rounded-3xl"
-              onClick={() => setIsExpanded(!isExpanded)}
-            />
-          ) : (
-            <LinkButton
-              icon={<MdOutlineKeyboardDoubleArrowLeft className="size-3" />}
-              type="button"
-              className="px-1 rounded-3xl"
-              onClick={() => setIsExpanded(!isExpanded)}
-            />
-          )}
-        </div>
-
-        <ul className="text-sm w-full text-left flex justify-center gap-x-5 lg:gap-0 lg:block gap-2 lg:space-y-2">
-          <li>
-            <SidebarLinkButton
-              className="rounded-full"
-              href="/content/chats"
-              icon={<MessageCircle className="size-4" />}
-              label={isExpanded ? "Chats" : ""}
-              isExpanded={isExpanded}
-            />
-          </li>
-          <li>
-            <SidebarLinkButton
-              href="/content/friends"
-              icon={<Handshake className="size-4" />}
-              label={isExpanded ? "Friends" : ""}
-              isExpanded={isExpanded}
-            />
-          </li>
-          <li>
-            <SidebarLinkButton
-              icon={<Cog className="size-4" />}
-              label={isExpanded ? "Settings" : ""}
-              isExpanded={isExpanded}
-            />
-          </li>
-        </ul>
-
         <div>
-          <LinkButton
-            icon={<Settings className="size-[0.6rem]" />}
-            type="button"
-            className="px-1 rounded-3xl"
-            onClick={() => {
-              console.log("Logout");
-            }}
-          />
+          <ul className="h-full flex flex-col gap-y-3">
+            <li>
+              <SidebarLinkButton
+                className="rounded-full"
+                href="/content/chats"
+                icon={<MessageCircle className="size-4" />}
+                label={isExpanded ? "Chats" : ""}
+                isExpanded={isExpanded}
+              />
+            </li>
+            <li>
+              <SidebarLinkButton
+                href="/content/friends"
+                icon={<Handshake className="size-4" />}
+                label={isExpanded ? "Friends" : ""}
+                isExpanded={isExpanded}
+              />
+            </li>
+            <li>
+              <SidebarLinkButton
+                icon={<Cog className="size-4" />}
+                label={isExpanded ? "Settings" : ""}
+                isExpanded={isExpanded}
+              />
+            </li>
+          </ul>
         </div>
       </div>
     </>
