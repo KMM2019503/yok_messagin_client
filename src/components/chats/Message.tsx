@@ -4,11 +4,7 @@ import { useAuthStore } from "@/providers/auth-store-provider";
 import { useSelectedConversationStore } from "@/stores/selected-covnersation-store";
 //package
 import { cn } from "@/lib/utils";
-import {
-  format,
-  differenceInHours,
-  formatDistanceToNowStrict,
-} from "date-fns";
+import { format, differenceInHours, formatDistanceToNowStrict } from "date-fns";
 //Components
 import { Avatar } from "../ui/Avatar";
 import { AvatarImage } from "../ui/AvatarImage";
@@ -37,6 +33,45 @@ const Message = ({
   );
   const [otherMember, setOtherMember] = useState<UserType | null>(null);
   const [isAuthUserSender, setIsAuthUserSender] = useState<boolean>(false);
+  const [formattedTime, setFormattedTime] = useState<string>("");
+
+  useEffect(() => {
+    const updateFormattedTime = () => {
+      try {
+        const date = new Date(message.createdAt);
+        const now = new Date();
+        const hoursDiff = differenceInHours(now, date);
+
+        if (hoursDiff >= 1) {
+          setFormattedTime(format(date, "MMM d, yyyy h:mm a"));
+        } else {
+          setFormattedTime(
+            formatDistanceToNowStrict(date, { addSuffix: true })
+          );
+        }
+      } catch {
+        setFormattedTime("Unknown time");
+      }
+    };
+
+    updateFormattedTime(); // Initial call
+
+    const date = new Date(message.createdAt);
+    const now = new Date();
+    const hoursDiff = differenceInHours(now, date);
+
+    let interval: NodeJS.Timeout | null = null;
+
+    if (hoursDiff < 1) {
+      interval = setInterval(() => {
+        updateFormattedTime();
+      }, 60 * 1000); // 1 minute
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [message.createdAt]);
 
   useEffect(() => {
     if (selectedConversation?.members && user) {
@@ -128,7 +163,7 @@ const Message = ({
             )}
           >
             <span className="secondary-font-style text-xs font-normal leading-4 py-1">
-              {formatTime(message.createdAt)}
+              {formattedTime}
             </span>
             {message.status.status === "SENT" && (
               <BsFillSendCheckFill className="size-4 secondary-font-style" />

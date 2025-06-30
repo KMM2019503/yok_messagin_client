@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { Users } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { IoPersonCircle } from "react-icons/io5";
 import { Avatar } from "../ui/Avatar";
 import { AvatarImage } from "../ui/AvatarImage";
 import { AvatarFallback } from "../ui/AvatarFallback";
 import { Conversation } from "@/type/conversation.type";
 import { usePathname, useRouter } from "next/navigation";
 import { useSelectedConversationStore } from "@/stores/selected-covnersation-store";
-import { IoPersonCircle } from "react-icons/io5";
+import { useSocketStore } from "@/stores/socket-store";
 
 interface ConversationItemProps {
   conversation: Conversation;
@@ -19,31 +19,25 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
   conversation,
   currentUserId,
 }) => {
-  const [isActive, setIsActive] = React.useState(false);
-  const { changeSelectedConversation  } = useSelectedConversationStore();
-  
   const router = useRouter();
   const pathname = usePathname();
+  const { checkUserOnlineStatus, onlineUser } = useSocketStore();
 
-  const handleCheckIsActive = () => {
-    if (pathname.includes(conversation.id)) {
-      setIsActive(true);
-    } else {
-      setIsActive(false);
-    }
-  };
+  const { changeSelectedConversation } = useSelectedConversationStore();
+  const [isUserActive, setIsUserActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
-    handleCheckIsActive();
-  });
+    setIsActive(pathname.includes(conversation.id));
+  }, [pathname, conversation.id]);
 
   const handleClickConversation = () => {
     changeSelectedConversation(conversation);
     router.push(`/content/chats/${conversation.id}`);
   };
+
   const formatTime = (timeString?: string) => {
     if (!timeString) return "";
-
     const date = new Date(timeString);
     const now = new Date();
     const diffInHours = (now.getTime() - date.getTime()) / (1000 * 60 * 60);
@@ -54,62 +48,29 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
         minute: "2-digit",
       });
     } else if (diffInHours < 168) {
-      // 7 days
       return date.toLocaleDateString([], { weekday: "short" });
     } else {
       return date.toLocaleDateString([], { month: "short", day: "numeric" });
     }
   };
 
-  const getConversationType = (): "direct" | "group" => {
-    return conversation.members.length === 2 ? "direct" : "group";
-  };
+  const otherMember = conversation.members.find(
+    (member) => member.userId !== currentUserId
+  );
 
-  const getDisplayName = () => {
-    if (getConversationType() === "group") {
-      // Group chat - create a title from member names
-      const memberNames = conversation.members
-        .slice(0, 3)
-        .map((member) => member.user.userName)
-        .join(", ");
-
-      if (conversation.members.length > 3) {
-        return `${memberNames} and ${conversation.members.length - 3} others`;
-      }
-      return memberNames;
+  useEffect(() => {
+    if (otherMember) {
+      setIsUserActive(checkUserOnlineStatus(otherMember.user.id));
     }
+  }, [otherMember, onlineUser]);
 
-    // Direct message - show the other participant's name
-    const otherMember = conversation.members.find(
-      (member) => member.userId !== currentUserId
-    );
-    return otherMember?.user.userName || "Unknown User";
-  };
-
-  const getAvatarSrc = () => {
-    if (getConversationType() === "direct") {
-      const otherMember = conversation.members.find(
-        (member) => member.userId !== currentUserId
-      );
-      return otherMember?.user.profilePictureUrl;
-    }
-    return undefined;
-  };
-
-  const getInitials = () => {
-    const name = getDisplayName();
-    return name
-      .split(" ")
-      .map((word) => word[0])
-      .join("")
-      .toUpperCase()
-      .slice(0, 2);
-  };
+  const displayName = otherMember?.user.userName || "Unknown User";
+  const avatarSrc = otherMember?.user.profilePictureUrl;
 
   return (
     <div
-      className={`
-        w-full p-3 rounded-md glass-background cursor-pointer transition-colors duration-200
+      onClick={handleClickConversation}
+      className={`w-full p-3 rounded-md glass-background cursor-pointer transition-colors duration-200
         hover:bg-white/65 dark:hover:bg-black/20 backdrop-blur-xl
         ${
           isActive
@@ -117,24 +78,21 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
             : ""
         }
       `}
-      onClick={handleClickConversation}
     >
       <div className="flex items-start space-x-3">
         {/* Avatar */}
         <div className="relative flex-shrink-0">
-          <Avatar className="w-10 h-10">
+          <Avatar className="w-10 h-10 flex-shrink-0">
             <AvatarImage
-              src={getAvatarSrc() || 'https://avatar.iran.liara.run/public/'}
-              alt={getDisplayName()}
+              src={avatarSrc || "https://avatar.iran.liara.run/public/"}
+              alt={displayName}
             />
             <AvatarFallback className="text-sm">
-              <IoPersonCircle className="size-10 text-primaryLight-600"/>
+              <IoPersonCircle className="size-10 text-primaryLight-600" />
             </AvatarFallback>
           </Avatar>
-          {getConversationType() === "group" && (
-            <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white dark:border-gray-800 flex items-center justify-center">
-              <Users className="w-2 h-2 text-white" />
-            </div>
+          {isUserActive && (
+            <div className="bg-green-400 h-1 w-1 rounded-full absolute top-0 right-0"></div>
           )}
         </div>
 
@@ -142,18 +100,14 @@ const ConversationItem: React.FC<ConversationItemProps> = ({
         <div className="flex-1 min-w-0">
           <div className="flex items-center justify-between mb-1">
             <h3 className="text-sm font-medium primary-font-style">
-              {getDisplayName()}
+              {displayName}{" "}
             </h3>
-            <div className="flex items-center space-x-2">
-              {conversation.lastMessage?.createdAt && (
-                <span className="text-xs text-[9px] secondary-font-style">
-                  {formatTime(conversation.lastMessage.createdAt)}
-                </span>
-              )}
-              {/* Unread count would need to be implemented separately */}
-            </div>
+            {conversation.lastMessage?.createdAt && (
+              <span className="text-[10px] text-muted-foreground">
+                {formatTime(conversation.lastMessage.createdAt)}
+              </span>
+            )}
           </div>
-
           {conversation.lastMessage?.content && (
             <p className="text-xs secondary-font-style truncate">
               {conversation.lastMessage.content}

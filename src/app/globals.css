@@ -195,26 +195,18 @@
 }
 
 /* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
 .loader4 {
-  width: 30px;
+  width: 20px;
   aspect-ratio: 1;
-  display: grid;
+  border-radius: 50%;
+  background: #514b82;
+  -webkit-mask: radial-gradient(circle closest-side at 50% 40%,#0000 94%, #000);
+  transform-origin: 50% 40%;
+  animation: l25 1s infinite linear;
 }
-.loader4::before,
-.loader4::after {
-  content: "";
-  grid-area: 1/1;
-  --c: no-repeat radial-gradient(farthest-side, #25b09b 92%, #0000);
-  background: var(--c) 50% 0, var(--c) 50% 100%, var(--c) 100% 50%,
-    var(--c) 0 50%;
-  background-size: 12px 12px;
-  animation: l12 1s infinite;
-}
-.loader4::before {
-  margin: 4px;
-  filter: hue-rotate(45deg);
-  background-size: 6px 6px;
-  animation-timing-function: linear;
+@keyframes l25 {
+  100% {transform: rotate(1turn)}
 }
 
 @keyframes l12 {
